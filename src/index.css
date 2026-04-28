@@ -1,0 +1,300 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Marcellus&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Core boutique surfaces — warm ivory shopping base with espresso text */
+    --background: 40 55% 96%;
+    --foreground: 18 30% 8%;
+
+    --card: 45 100% 99%;
+    --card-foreground: 18 30% 8%;
+
+    --popover: 45 100% 99%;
+    --popover-foreground: 18 30% 8%;
+
+    /* Primary CTA: antique gold */
+    --primary: 38 45% 56%;
+    --primary-foreground: 20 32% 8%;
+
+    /* Secondary: soft champagne wash */
+    --secondary: 34 48% 92%;
+    --secondary-foreground: 18 30% 8%;
+
+    --muted: 34 38% 91%;
+    --muted-foreground: 27 13% 39%;
+
+    /* Accent: burgundy rose */
+    --accent: 348 32% 20%;
+    --accent-foreground: 40 30% 95%;
+
+    --destructive: 0 55% 46%;
+    --destructive-foreground: 40 20% 98%;
+
+    /* Borders: champagne and antique-gold washed */
+    --border: 34 36% 84%;
+    --input: 34 36% 84%;
+    --ring: 38 42% 50%;
+
+    --radius: 0.1875rem;
+
+    /* Brand scale — antique gold, ivory, warm taupe */
+    --gold: 38 45% 56%;
+    --gold-light: 40 38% 72%;
+    --gold-dark: 34 50% 42%;
+    --gold-muted: 36 24% 48%;
+    /* Champagne/ivory/cream: reserved for text & highlights */
+    --champagne: 38 32% 78%;
+    --ivory: 40 35% 96%;
+    /* --cream: light tone for `text-cream` utilities */
+    --cream: 40 32% 94%;
+    /* Lifted section surfaces */
+    --section-soft: 36 52% 93%;
+    --section-muted: 34 48% 91%;
+    /* Product image well */
+    --surface-image: 36 42% 92%;
+
+    --charcoal: 20 12% 8%;
+    --charcoal-light: 20 8% 38%;
+    --charcoal-medium: 20 10% 18%;
+    /* Burgundy / oxblood accents (badges, overlays) */
+    --teal: 348 32% 28%;
+    --teal-light: 348 25% 38%;
+    --burgundy: 348 42% 20%;
+    --burgundy-glow: 348 50% 14%;
+    --espresso: 16 24% 7%;
+    --oxblood: 348 48% 15%;
+
+    --font-heading: 'Cormorant Garamond', 'Georgia', serif;
+    --font-display: 'Marcellus', 'Georgia', serif;
+    --font-body: 'Nunito Sans', 'Helvetica Neue', sans-serif;
+
+    /* Sidebar: keep application drawers dark for contrast */
+    --sidebar-background: 16 24% 7%;
+    --sidebar-foreground: 40 30% 92%;
+    --sidebar-primary: 38 45% 55%;
+    --sidebar-primary-foreground: 20 32% 8%;
+    --sidebar-accent: 348 28% 16%;
+    --sidebar-accent-foreground: 40 30% 95%;
+    --sidebar-border: 28 16% 18%;
+    --sidebar-ring: 38 42% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 14px;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    line-height: 1.12;
+  }
+  h1 { font-size: clamp(2rem, 4vw, 3.5rem); }
+  h2 { font-size: clamp(1.75rem, 3vw, 2.75rem); }
+  h3 { font-size: clamp(1.25rem, 2vw, 1.75rem); }
+}
+
+@layer utilities {
+  .font-heading { font-family: var(--font-heading); }
+  .font-display { font-family: var(--font-display); }
+  .font-body { font-family: var(--font-body); }
+
+  .text-gold-gradient {
+    background: linear-gradient(135deg, hsl(var(--gold-dark)) 0%, hsl(var(--gold)) 40%, hsl(var(--gold-light)) 70%, hsl(var(--gold)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .bg-gold-gradient {
+    background: linear-gradient(135deg, hsl(var(--gold-dark)) 0%, hsl(var(--gold)) 45%, hsl(var(--gold-light)) 100%);
+  }
+  .bg-gold-gradient-hover {
+    background: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(var(--gold-light)) 50%, hsl(var(--gold)) 100%);
+  }
+  .border-gold { border-color: hsl(var(--gold) / 0.35); }
+  .bg-charcoal { background-color: hsl(var(--charcoal)); }
+  .bg-charcoal-medium { background-color: hsl(var(--charcoal-medium)); }
+  .text-charcoal { color: hsl(var(--charcoal)); }
+  .bg-ivory { background-color: hsl(var(--ivory)); }
+  .text-gold { color: hsl(var(--gold)); }
+  .text-gold-muted { color: hsl(var(--gold-muted)); }
+  .text-teal { color: hsl(var(--teal)); }
+  .bg-teal { background-color: hsl(var(--teal)); }
+
+  .label-luxury {
+    font-family: var(--font-body);
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .label-editorial {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: hsl(var(--burgundy) / 0.92);
+  }
+  .heading-editorial {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+  }
+
+  .section-luxury {
+    position: relative;
+    overflow: hidden;
+  }
+  .section-luxury::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, hsl(var(--gold) / 0.4));
+  }
+
+  .texture-subtle {
+    position: relative;
+  }
+  .texture-subtle::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c6a15b' fill-opacity='0.035'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .divider-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: hsl(var(--gold) / 0.45);
+  }
+  .divider-ornament::before,
+  .divider-ornament::after {
+    content: '';
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, hsl(var(--gold) / 0.25), transparent);
+  }
+
+  /* Hero: oxblood + espresso cinematic overlay (replaces flat grey wash) */
+  .hero-boutique-overlay {
+    background: linear-gradient(
+      110deg,
+      hsl(var(--oxblood) / 0.78) 0%,
+      hsl(20 28% 7% / 0.7) 38%,
+      hsl(15 20% 9% / 0.35) 100%
+    );
+  }
+  .hero-boutique-vignette {
+    background: linear-gradient(to top, hsl(var(--espresso) / 0.85) 0%, transparent 100%);
+  }
+
+  .announcement-bar {
+    @apply text-center py-2.5 text-[10px] tracking-[0.2em] uppercase font-body font-light;
+    color: hsl(40 20% 78% / 0.95);
+    background: linear-gradient(90deg, hsl(348 38% 11%) 0%, hsl(20 25% 7%) 40%, hsl(348 32% 10%) 100%);
+    border-bottom: 1px solid hsl(var(--gold) / 0.12);
+  }
+
+  .btn-luxury {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 36px;
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.35s ease, transform 0.35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-luxury-gold {
+    background: linear-gradient(135deg, hsl(var(--gold-dark)), hsl(var(--gold)) 50%, hsl(var(--gold-light)));
+    color: hsl(20 32% 6%);
+    background-size: 200% 200%;
+  }
+  .btn-luxury-gold:hover {
+    background-position: 95% 50%;
+    box-shadow: 0 6px 28px hsl(var(--gold) / 0.25);
+    transform: translateY(-1px);
+  }
+  .btn-luxury-outline {
+    background: transparent;
+    border: 1px solid hsl(var(--burgundy) / 0.35);
+    color: hsl(var(--burgundy));
+  }
+  .btn-luxury-outline:hover {
+    border-color: hsl(var(--burgundy) / 0.65);
+    background: hsl(var(--burgundy) / 0.06);
+    color: hsl(var(--oxblood));
+  }
+  .btn-luxury-cream {
+    background: transparent;
+    border: 1px solid hsl(var(--ivory) / 0.4);
+    color: hsl(var(--ivory) / 0.95);
+  }
+  .btn-luxury-cream:hover {
+    background: hsl(var(--ivory) / 0.08);
+    border-color: hsl(var(--gold) / 0.5);
+  }
+
+  /* Subtle product / editorial frame */
+  .frame-luxury {
+    box-shadow:
+      0 1px 0 hsl(var(--gold) / 0.16),
+      0 18px 36px -24px hsl(18 30% 8% / 0.28);
+  }
+}
+
+@keyframes megaMenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scrollbar — dark */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: hsl(var(--espresso)); }
+::-webkit-scrollbar-thumb { background: hsl(var(--gold) / 0.25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--gold) / 0.4); }
+
+::selection {
+  background: hsl(var(--gold) / 0.22);
+  color: hsl(var(--ivory));
+}
+
+a, button { transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; }
+img { transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
