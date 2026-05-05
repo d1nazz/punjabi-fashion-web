@@ -1,0 +1,1176 @@
+[
+  {
+    "id": "ps-1",
+    "slug": "orange-embroidered-punjabi-suit-01",
+    "name": "Orange Embroidered Punjabi Suit Set",
+    "price": 149,
+    "sku": "PF-PS-001",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "ps-2",
+    "slug": "blue-occasion-wear-punjabi-suit-02",
+    "name": "Blue Occasion Wear Punjabi Suit",
+    "price": 169,
+    "sku": "PF-PS-002",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "ps-3",
+    "slug": "yellow-festive-punjabi-suit-set-03",
+    "name": "Yellow Festive Punjabi Suit Set",
+    "price": 139,
+    "sku": "PF-PS-003",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "ps-4",
+    "slug": "pink-classic-punjabi-suit-set-04",
+    "name": "Pink Classic Punjabi Suit Set",
+    "price": 129,
+    "sku": "PF-PS-004",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "ps-5",
+    "slug": "mint-traditional-punjabi-suit-05",
+    "name": "Mint Traditional Punjabi Suit",
+    "price": 159,
+    "sku": "PF-PS-005",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "ps-6",
+    "slug": "mauve-south-asian-punjabi-suit-set-06",
+    "name": "Mauve South Asian Punjabi Suit Set",
+    "price": 149,
+    "sku": "PF-PS-006",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "ps-7",
+    "slug": "purple-statement-punjabi-suit-set-07",
+    "name": "Purple Statement Punjabi Suit Set",
+    "price": 179,
+    "sku": "PF-PS-007",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-1",
+    "slug": "royal-blue-embroidered-lehenga-set",
+    "name": "Royal Blue Embroidered Lehenga Set",
+    "price": 389,
+    "sku": "PF-LH-001",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-2",
+    "slug": "mint-floral-embroidered-lehenga",
+    "name": "Mint Floral Embroidered Lehenga",
+    "price": 349,
+    "sku": "PF-LH-002",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-3",
+    "slug": "black-embroidered-sharara-lehenga-set",
+    "name": "Black Embroidered Sharara Lehenga Set",
+    "price": 329,
+    "sku": "PF-LH-003",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-4",
+    "slug": "blue-festive-lehenga-set",
+    "name": "Blue Festive Lehenga Set",
+    "price": 379,
+    "sku": "PF-LH-004",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-5",
+    "slug": "rose-pink-embellished-lehenga",
+    "name": "Rose Pink Embellished Lehenga",
+    "price": 359,
+    "sku": "PF-LH-005",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-6",
+    "slug": "champagne-gold-traditional-lehenga",
+    "name": "Champagne Gold Traditional Lehenga",
+    "price": 399,
+    "sku": "PF-LH-006",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-7",
+    "slug": "black-gold-statement-lehenga",
+    "name": "Black and Gold Statement Lehenga",
+    "price": 399,
+    "sku": "PF-LH-007",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-8",
+    "slug": "pastel-floral-lehenga-set",
+    "name": "Pastel Floral Lehenga Set",
+    "price": 299,
+    "sku": "PF-LH-008",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-9",
+    "slug": "rust-red-occasion-lehenga",
+    "name": "Rust Red Occasion Lehenga",
+    "price": 369,
+    "sku": "PF-LH-009",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-10",
+    "slug": "sage-green-embroidered-lehenga",
+    "name": "Sage Green Embroidered Lehenga",
+    "price": 349,
+    "sku": "PF-LH-010",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-11",
+    "slug": "teal-embroidered-sharara-lehenga-set",
+    "name": "Teal Embroidered Sharara Lehenga Set",
+    "price": 319,
+    "sku": "PF-LH-011",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-12",
+    "slug": "orange-red-festive-lehenga",
+    "name": "Orange Red Festive Lehenga",
+    "price": 339,
+    "sku": "PF-LH-012",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-13",
+    "slug": "yellow-mehndi-lehenga-set",
+    "name": "Yellow Mehndi Lehenga Set",
+    "price": 299,
+    "sku": "PF-LH-013",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-14",
+    "slug": "ivory-gold-occasion-lehenga",
+    "name": "Ivory Gold Occasion Lehenga",
+    "price": 379,
+    "sku": "PF-LH-014",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-15",
+    "slug": "pink-statement-lehenga-set",
+    "name": "Pink Statement Lehenga Set",
+    "price": 359,
+    "sku": "PF-LH-015",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-16",
+    "slug": "lime-green-festive-lehenga",
+    "name": "Lime Green Festive Lehenga",
+    "price": 289,
+    "sku": "PF-LH-016",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "sh-1",
+    "slug": "teal-festive-sharara-set",
+    "name": "Teal Festive Sharara Set",
+    "price": 249,
+    "sku": "PF-SH-001",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "sh-2",
+    "slug": "orange-embroidered-sharara-set",
+    "name": "Orange Embroidered Sharara Set",
+    "price": 239,
+    "sku": "PF-SH-002",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "sh-3",
+    "slug": "ivory-black-statement-sharara-set",
+    "name": "Ivory Black Statement Sharara Set",
+    "price": 329,
+    "sku": "PF-SH-003",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "sh-5",
+    "slug": "navy-cream-embroidered-sharara-set",
+    "name": "Navy Cream Embroidered Sharara Set",
+    "price": 289,
+    "sku": "PF-SH-005",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "sh-6",
+    "slug": "navy-cream-occasion-sharara-set",
+    "name": "Navy Cream Occasion Sharara Set",
+    "price": 289,
+    "sku": "PF-SH-006",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "sh-7",
+    "slug": "black-festive-sharara-set",
+    "name": "Black Festive Sharara Set",
+    "price": 299,
+    "sku": "PF-SH-007",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "sh-8",
+    "slug": "ivory-black-occasion-sharara-set",
+    "name": "Ivory Black Occasion Sharara Set",
+    "price": 329,
+    "sku": "PF-SH-008",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "pw-s1-1",
+    "slug": "purple-embroidered-party-wear-suit-style-1-01",
+    "name": "Purple Embroidered Party Wear Suit",
+    "price": 219,
+    "sku": "PF-PW-S1-001",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "pw-s1-2",
+    "slug": "red-statement-party-wear-set-style-1-02",
+    "name": "Red Statement Party Wear Set",
+    "price": 229,
+    "sku": "PF-PW-S1-002",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "pw-s1-3",
+    "slug": "emerald-occasion-wear-suit-style-1-03",
+    "name": "Emerald Occasion Wear Suit Set",
+    "price": 219,
+    "sku": "PF-PW-S1-003",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "pw-s1-4",
+    "slug": "black-embellished-party-wear-suit-style-1-04",
+    "name": "Black Embellished Party Wear Suit",
+    "price": 229,
+    "sku": "PF-PW-S1-004",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "pw-s2-1",
+    "slug": "purple-festive-party-wear-set-style-2-01",
+    "name": "Purple Festive Party Wear Set",
+    "price": 239,
+    "sku": "PF-PW-S2-001",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "pw-s2-2",
+    "slug": "red-festive-party-wear-suit-style-2-02",
+    "name": "Red Festive Party Wear Suit",
+    "price": 239,
+    "sku": "PF-PW-S2-002",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "pw-s2-3",
+    "slug": "blue-statement-party-wear-set-style-2-03",
+    "name": "Blue Statement Party Wear Set",
+    "price": 249,
+    "sku": "PF-PW-S2-003",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "pw-s3-1",
+    "slug": "red-traditional-party-wear-ensemble-style-3-01",
+    "name": "Red Traditional Party Wear Ensemble",
+    "price": 249,
+    "sku": "PF-PW-S3-001",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bg-14",
+    "slug": "orange-gold-tone-bangle-set-14",
+    "name": "Orange Gold-Tone Bangle Set",
+    "price": 49,
+    "sku": "PF-BG-014",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bg-15",
+    "slug": "blue-traditional-bangle-set-15",
+    "name": "Blue Traditional Bangle Set",
+    "price": 39,
+    "sku": "PF-BG-015",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bg-16",
+    "slug": "navy-gold-tone-bangle-set-16",
+    "name": "Navy Gold-Tone Bangle Set",
+    "price": 49,
+    "sku": "PF-BG-016",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bg-17",
+    "slug": "pink-gold-tone-bangle-set-17",
+    "name": "Pink Gold-Tone Bangle Set",
+    "price": 49,
+    "sku": "PF-BG-017",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bg-18",
+    "slug": "turquoise-gold-tone-bangle-set-18",
+    "name": "Turquoise Gold-Tone Bangle Set",
+    "price": 49,
+    "sku": "PF-BG-018",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bg-19",
+    "slug": "multicolor-charm-bangle-set-19",
+    "name": "Multicolor Charm Bangle Set",
+    "price": 59,
+    "sku": "PF-BG-019",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bg-20",
+    "slug": "blush-pink-bangle-set-20",
+    "name": "Blush Pink Bangle Set",
+    "price": 39,
+    "sku": "PF-BG-020",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bg-21",
+    "slug": "olive-green-bangle-set-21",
+    "name": "Olive Green Bangle Set",
+    "price": 49,
+    "sku": "PF-BG-021",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bg-22",
+    "slug": "maroon-stone-detail-bangle-set-22",
+    "name": "Maroon Stone-Detail Bangle Set",
+    "price": 59,
+    "sku": "PF-BG-022",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bg-23",
+    "slug": "multicolor-stone-charm-bangle-set-23",
+    "name": "Multicolor Stone Charm Bangle Set",
+    "price": 59,
+    "sku": "PF-BG-023",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bg-24",
+    "slug": "red-charm-bangle-set-24",
+    "name": "Red Charm Bangle Set",
+    "price": 59,
+    "sku": "PF-BG-024",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bg-25",
+    "slug": "burgundy-silver-tone-bangle-set-25",
+    "name": "Burgundy Silver-Tone Bangle Set",
+    "price": 39,
+    "sku": "PF-BG-025",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bg-26",
+    "slug": "red-gold-tone-bangle-set-26",
+    "name": "Red Gold-Tone Bangle Set",
+    "price": 49,
+    "sku": "PF-BG-026",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bg-27",
+    "slug": "deep-red-charm-bangle-set-27",
+    "name": "Deep Red Charm Bangle Set",
+    "price": 59,
+    "sku": "PF-BG-027",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-1",
+    "slug": "purple-gold-tone-jhumka-earrings-01",
+    "name": "Purple Gold-Tone Jhumka Earrings",
+    "price": 29,
+    "sku": "PF-ER-001",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-2",
+    "slug": "mint-gold-tone-jhumka-earrings-02",
+    "name": "Mint Gold-Tone Jhumka Earrings",
+    "price": 29,
+    "sku": "PF-ER-002",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-3",
+    "slug": "blue-gold-tone-jhumka-earrings-03",
+    "name": "Blue Gold-Tone Jhumka Earrings",
+    "price": 29,
+    "sku": "PF-ER-003",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-4",
+    "slug": "red-gold-tone-jhumka-earrings-04",
+    "name": "Red Gold-Tone Jhumka Earrings",
+    "price": 29,
+    "sku": "PF-ER-004",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-5",
+    "slug": "orange-gold-tone-jhumka-earrings-05",
+    "name": "Orange Gold-Tone Jhumka Earrings",
+    "price": 29,
+    "sku": "PF-ER-005",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-6",
+    "slug": "maroon-gold-tone-jhumka-earrings-06",
+    "name": "Maroon Gold-Tone Jhumka Earrings",
+    "price": 29,
+    "sku": "PF-ER-006",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-7",
+    "slug": "multicolor-gold-tone-jhumka-earrings-07",
+    "name": "Multicolor Gold-Tone Jhumka Earrings",
+    "price": 35,
+    "sku": "PF-ER-007",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-8",
+    "slug": "pink-gold-tone-jhumka-earrings-08",
+    "name": "Pink Gold-Tone Jhumka Earrings",
+    "price": 29,
+    "sku": "PF-ER-008",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-9",
+    "slug": "blush-gold-tone-jhumka-earrings-09",
+    "name": "Blush Gold-Tone Jhumka Earrings",
+    "price": 29,
+    "sku": "PF-ER-009",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-10",
+    "slug": "mustard-gold-tone-jhumka-earrings-10",
+    "name": "Mustard Gold-Tone Jhumka Earrings",
+    "price": 29,
+    "sku": "PF-ER-010",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-11",
+    "slug": "black-gold-tone-jhumka-earrings-11",
+    "name": "Black Gold-Tone Jhumka Earrings",
+    "price": 29,
+    "sku": "PF-ER-011",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-12",
+    "slug": "champagne-statement-earrings-12",
+    "name": "Champagne Statement Earrings",
+    "price": 49,
+    "sku": "PF-ER-012",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-13",
+    "slug": "pink-statement-earrings-13",
+    "name": "Pink Statement Earrings",
+    "price": 55,
+    "sku": "PF-ER-013",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-14",
+    "slug": "round-embellished-drop-earrings-14",
+    "name": "Round Embellished Drop Earrings",
+    "price": 45,
+    "sku": "PF-ER-014",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-15",
+    "slug": "teardrop-embellished-earrings-15",
+    "name": "Teardrop Embellished Earrings",
+    "price": 45,
+    "sku": "PF-ER-015",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-16",
+    "slug": "purple-occasion-wear-earrings-16",
+    "name": "Purple Occasion Wear Earrings",
+    "price": 35,
+    "sku": "PF-ER-016",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-17",
+    "slug": "pink-occasion-wear-earrings-17",
+    "name": "Pink Occasion Wear Earrings",
+    "price": 35,
+    "sku": "PF-ER-017",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-18",
+    "slug": "yellow-occasion-wear-earrings-18",
+    "name": "Yellow Occasion Wear Earrings",
+    "price": 35,
+    "sku": "PF-ER-018",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-19",
+    "slug": "black-occasion-wear-earrings-19",
+    "name": "Black Occasion Wear Earrings",
+    "price": 35,
+    "sku": "PF-ER-019",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-20",
+    "slug": "gold-tone-festive-earrings-20",
+    "name": "Gold-Tone Festive Earrings",
+    "price": 39,
+    "sku": "PF-ER-020",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-21",
+    "slug": "pink-festive-earrings-21",
+    "name": "Pink Festive Earrings",
+    "price": 39,
+    "sku": "PF-ER-021",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-22",
+    "slug": "blush-festive-earrings-22",
+    "name": "Blush Festive Earrings",
+    "price": 39,
+    "sku": "PF-ER-022",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "er-23",
+    "slug": "blue-festive-earrings-23",
+    "name": "Blue Festive Earrings",
+    "price": 39,
+    "sku": "PF-ER-023",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "nk-1",
+    "slug": "traditional-gold-tone-necklace-set-01",
+    "name": "Traditional Gold-Tone Necklace Set",
+    "price": 59,
+    "sku": "PF-NK-001",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "nk-2",
+    "slug": "festive-gold-tone-necklace-set-02",
+    "name": "Festive Gold-Tone Necklace Set",
+    "price": 89,
+    "sku": "PF-NK-002",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "nk-3",
+    "slug": "burgundy-statement-necklace-set-03",
+    "name": "Burgundy Statement Necklace Set",
+    "price": 109,
+    "sku": "PF-NK-003",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "nk-4",
+    "slug": "silver-tone-statement-necklace-set-04",
+    "name": "Silver-Tone Statement Necklace Set",
+    "price": 99,
+    "sku": "PF-NK-004",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "nk-5",
+    "slug": "blue-accent-gold-tone-necklace-set-05",
+    "name": "Blue Accent Gold-Tone Necklace Set",
+    "price": 109,
+    "sku": "PF-NK-005",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "nk-6",
+    "slug": "silver-tone-occasion-wear-necklace-set-06",
+    "name": "Silver-Tone Occasion Wear Necklace Set",
+    "price": 119,
+    "sku": "PF-NK-006",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "nk-7",
+    "slug": "gold-tone-complete-look-necklace-set-07",
+    "name": "Gold-Tone Complete Look Necklace Set",
+    "price": 79,
+    "sku": "PF-NK-007",
+    "sizes": [
+      "One Size"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  }
+]

@@ -31,7 +31,7 @@ export default function AboutPage() {
             <h2 className="heading-editorial text-foreground text-2xl md:text-3xl mb-5">A Brampton Punjabi Clothing Boutique</h2>
             <div className="space-y-4 text-muted-foreground text-[14px] leading-relaxed">
               <p>{businessInfo.description}</p>
-              <p>Visit Punjabi Fashion at {businessInfo.address.short} for Punjabi suits, lehengas, party wear, shararas, jewelry, bangles, and accessories selected for everyday elegance and special occasions.</p>
+              <p>Visit Punjabi Fashion at {businessInfo.address.short} for Punjabi suits, lehengas, party wear, shararas, jewelry, and accessories selected for everyday elegance and special occasions.</p>
               <p>Our team focuses on warm, personalized care, helping shoppers find outfits and finishing pieces that feel connected to heritage while fitting modern celebrations.</p>
             </div>
           </div>
@@ -94,7 +94,7 @@ export function VisitStorePage() {
     'Shararas',
     'Men’s Wear',
     'Kids’ Outfits',
-    'Bangles, Earrings & Necklaces',
+    'Earrings, Necklaces & Accessories',
     'Styling Help',
   ];
 
@@ -107,7 +107,7 @@ export function VisitStorePage() {
     {
       icon: Sparkles,
       title: 'Get Styling Help',
-      desc: 'Ask for help pairing outfits with bangles, earrings, and necklaces.',
+      desc: 'Ask for help pairing outfits with earrings, necklaces, and accessories.',
     },
     {
       icon: ShoppingBag,
@@ -269,7 +269,7 @@ export function VisitStorePage() {
 export function ContactPage() {
   const helpTopics = [
     { icon: ShoppingBag, title: 'Product Availability', desc: 'Ask about sizes, colours, and new arrivals.' },
-    { icon: Sparkles, title: 'Styling Help', desc: 'Get help matching suits, jewelry, bangles, and accessories.' },
+    { icon: Sparkles, title: 'Styling Help', desc: 'Get help matching suits, jewelry, and accessories.' },
     { icon: Store, title: 'Store Visit', desc: 'Plan your visit to the Brampton boutique.' },
     { icon: Heart, title: 'Occasion Shopping', desc: 'Find outfits for family events, festive nights, and celebrations.' },
   ];

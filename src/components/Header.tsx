@@ -2,7 +2,8 @@ import { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, User, Heart, ShoppingBag, Menu, X, ChevronDown } from 'lucide-react';
 import { useStore, type WishlistItem } from '@/contexts/StoreContext';
-import { products } from '@/data/products';
+import { catalogProducts } from '@/data/products';
+import CartDrawer from '@/components/cart/CartDrawer';
 
 const announcements = [
   'Visit Our Brampton Boutique — Open 7 Days a Week',
@@ -42,7 +43,7 @@ const normalizeCategoryValue = (value: string): string =>
 
 const firstHeaderProductImage = (categorySlug: string) => {
   const normalizedSlug = normalizeCategoryValue(categorySlug);
-  const product = products.find((item) => {
+  const product = catalogProducts.find((item) => {
     const category = normalizeCategoryValue(item.category);
     const subcategory = item.subcategory ? normalizeCategoryValue(item.subcategory) : '';
     const tags = item.tags.map(normalizeCategoryValue);
@@ -60,7 +61,6 @@ const womenFeatureImage =
   firstHeaderProductImage('punjabi-suits');
 
 const accessoriesFeatureImage =
-  firstHeaderProductImage('bangles') ??
   firstHeaderProductImage('earrings') ??
   firstHeaderProductImage('necklaces') ??
   firstHeaderProductImage('accessories');
@@ -167,7 +167,7 @@ const headerCategoryMenus: MegaMenuConfig[] = [
         heading: 'Shop Accessories',
         links: [
           { name: 'All Accessories', desc: 'Explore finishing pieces', path: '/category/accessories' },
-          { name: 'Bangles', desc: 'Traditional and festive bangles', path: '/category/bangles' },
+          { name: 'Bangles', desc: 'Bangle collection update', path: '/category/bangles' },
           { name: 'Earrings', desc: 'Statement and everyday earrings', path: '/category/earrings' },
           { name: 'Necklaces', desc: 'Jewelry to complete the look', path: '/category/necklaces' },
         ],
@@ -185,7 +185,7 @@ const headerCategoryMenus: MegaMenuConfig[] = [
     feature: {
       eyebrow: 'Complete The Look',
       title: 'Accessories',
-      description: 'Bangles, earrings, and necklaces to finish your outfit with detail and shine.',
+      description: 'Bangles, earrings, necklaces, and accessories to finish your outfit with detail and shine.',
       cta: 'Explore Accessories',
       href: '/category/accessories',
       image: accessoriesFeatureImage,
@@ -424,6 +424,7 @@ function RightClusterDesktop({
   wishlist,
   cartCount,
   megaMuted,
+  onCartOpen,
 }: {
   searchVal: string;
   setSearchVal: (s: string) => void;
@@ -431,6 +432,7 @@ function RightClusterDesktop({
   wishlist: WishlistItem[];
   cartCount: number;
   megaMuted: string;
+  onCartOpen: () => void;
 }) {
   return (
     <div className="ml-auto flex w-auto shrink-0 items-center gap-4 pl-2 min-[1200px]:gap-5 min-[1200px]:pl-3 2xl:gap-6">
@@ -489,7 +491,7 @@ function RightClusterDesktop({
             </span>
           )}
         </Link>
-        <Link to="/cart" className={`${iconBtn} relative`} aria-label="Cart">
+        <button type="button" onClick={onCartOpen} className={`${iconBtn} relative`} aria-label="Open cart">
           <ShoppingBag
             className="h-[20px] w-[20px] min-[1200px]:h-[22px] min-[1200px]:w-[22px]"
             strokeWidth={1.5}
@@ -499,7 +501,7 @@ function RightClusterDesktop({
               {cartCount}
             </span>
           )}
-        </Link>
+        </button>
       </div>
     </div>
   );
@@ -512,6 +514,7 @@ export default function Header() {
   const [megaTopPx, setMegaTopPx] = useState(0);
   const [announcementIdx, setAnnouncementIdx] = useState(0);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
   const [searchVal, setSearchVal] = useState('');
   const { cartCount, wishlist } = useStore();
   const navigate = useNavigate();
@@ -662,14 +665,19 @@ export default function Header() {
                       </span>
                     )}
                   </Link>
-                  <Link to="/cart" className={`${iconBtn} relative`} aria-label="Cart">
+                  <button
+                    type="button"
+                    onClick={() => setCartOpen(true)}
+                    className={`${iconBtn} relative`}
+                    aria-label="Open cart"
+                  >
                     <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
                     {cartCount > 0 && (
                       <span className="absolute -right-0.5 -top-0.5 flex h-3.5 min-w-3.5 items-center justify-center rounded-full bg-[#8A1F2D] text-[6.5px] font-bold text-white">
                         {cartCount}
                       </span>
                     )}
-                  </Link>
+                  </button>
                 </div>
               </div>
 
@@ -706,6 +714,7 @@ export default function Header() {
                   wishlist={wishlist}
                   cartCount={cartCount}
                   megaMuted={megaMuted}
+                  onCartOpen={() => setCartOpen(true)}
                 />
               </div>
             </div>
@@ -748,6 +757,8 @@ export default function Header() {
           )}
         </div>
       </header>
+
+      <CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
 
       {mobileOpen && (
         <div className="fixed inset-0 z-[100] lg:hidden">

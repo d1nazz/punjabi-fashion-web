@@ -20,7 +20,7 @@ import {
   Users,
 } from 'lucide-react';
 import { businessInfo } from '@/data/businessInfo';
-import { products, type Product } from '@/data/products';
+import { catalogProducts, type Product } from '@/data/products';
 
 const appointmentTypes = [
   'Everyday Wear',
@@ -60,7 +60,7 @@ const productMatches = (product: Product, categorySlug: string) => {
   return category === normalizedSlug || subcategory === normalizedSlug || tags.includes(normalizedSlug);
 };
 
-const firstProduct = (categorySlug: string) => products.find((product) => productMatches(product, categorySlug));
+const firstProduct = (categorySlug: string) => catalogProducts.find((product) => productMatches(product, categorySlug));
 
 const appointmentHelp = [
   {
@@ -106,7 +106,7 @@ const appointmentTypesCards = [
     icon: Gem,
     title: 'Accessories Matching',
     desc: 'Bangles, earrings, and necklaces to complete the look.',
-    product: firstProduct('bangles'),
+    product: firstProduct('earrings') ?? firstProduct('necklaces'),
   },
 ];
 

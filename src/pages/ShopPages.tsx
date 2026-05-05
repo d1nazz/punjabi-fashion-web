@@ -2,10 +2,11 @@ import Layout from '@/components/Layout';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ProductCard from '@/components/ProductCard';
 import CollectionHeader from '@/components/CollectionHeader';
+import CartContent from '@/components/cart/CartContent';
 import { useStore } from '@/contexts/StoreContext';
 import { Link } from 'react-router-dom';
-import { formatPrice, products, getNewArrivals, getReadyToShip, getSaleProducts } from '@/data/products';
-import { Trash2, Minus, Plus, ShoppingBag, Heart, ArrowRight, HelpCircle, PackageSearch, Phone, Store } from 'lucide-react';
+import { catalogProducts, getNewArrivals, getReadyToShip, getSaleProducts, isCatalogProduct, type Product } from '@/data/products';
+import { Heart, HelpCircle, PackageSearch, Phone, Store } from 'lucide-react';
 import { businessInfo } from '@/data/businessInfo';
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -41,7 +42,7 @@ const discoveryTabs = [
   { label: 'Ready to Ship', path: '/ready-to-ship' },
 ];
 
-function sortCollectionProducts(items: typeof products, sortBy: string) {
+function sortCollectionProducts(items: Product[], sortBy: string) {
   switch (sortBy) {
     case 'newest':
       return items.filter((p) => p.isNew).concat(items.filter((p) => !p.isNew));
@@ -64,7 +65,7 @@ function CollectionListingPage({
 }: {
   title: string;
   description: string;
-  items: typeof products;
+  items: Product[];
   breadcrumbItems: { name: string; path?: string }[];
   tabs: { label: string; path: string }[];
   activeTab: string;
@@ -98,17 +99,18 @@ function CollectionListingPage({
 
 export function WishlistPage() {
   const { wishlist } = useStore();
+  const visibleWishlist = wishlist.filter((item) => isCatalogProduct(item.product));
   return (
     <Layout>
       <div className="bg-champagne py-12 md:py-16 texture-subtle">
         <div className="container relative z-10"><Breadcrumbs items={[{ name: 'Wishlist' }]} />
           <h1 className="heading-editorial text-foreground">Your Wishlist</h1>
-          <p className="text-muted-foreground text-[13px] mt-1">{wishlist.length} {wishlist.length === 1 ? 'item' : 'items'} saved</p>
+          <p className="text-muted-foreground text-[13px] mt-1">{visibleWishlist.length} {visibleWishlist.length === 1 ? 'item' : 'items'} saved</p>
         </div>
       </div>
       <div className="container py-12">
-        {wishlist.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">{wishlist.map(i => <ProductCard key={i.product.id} product={i.product} />)}</div>
+        {visibleWishlist.length > 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">{visibleWishlist.map(i => <ProductCard key={i.product.id} product={i.product} />)}</div>
         ) : (
           <div className="text-center py-24">
             <div className="w-16 h-16 mx-auto mb-6 rounded-full border border-border flex items-center justify-center">
@@ -125,67 +127,27 @@ export function WishlistPage() {
 }
 
 export function CartPage() {
-  const { cart, removeFromCart, updateCartQuantity, cartTotal } = useStore();
+  const { cartCount } = useStore();
+
   return (
     <Layout>
-      <div className="bg-champagne py-12 md:py-16 texture-subtle">
-        <div className="container relative z-10"><Breadcrumbs items={[{ name: 'Shopping Cart' }]} />
-          <h1 className="heading-editorial text-foreground">Shopping Cart</h1>
-          <p className="text-muted-foreground text-[13px] mt-1">{cart.length} {cart.length === 1 ? 'item' : 'items'}</p>
+      <section className="border-b border-[#E6D8C4] bg-[#FBF7EF] py-8 md:py-10">
+        <div className="container relative z-10">
+          <Breadcrumbs items={[{ name: 'Cart' }]} />
+          <p className="label-editorial mb-3 text-[#5C1B24]">Your Selection</p>
+          <h1 className="heading-editorial text-3xl text-[#3A1117] md:text-4xl">Cart</h1>
+          <p className="mt-2 text-[13px] text-muted-foreground">
+            {cartCount} {cartCount === 1 ? 'item' : 'items'}
+          </p>
         </div>
-      </div>
-      <div className="container py-12">
-        {cart.length > 0 ? (
-          <div className="grid lg:grid-cols-3 gap-10">
-            <div className="lg:col-span-2 space-y-4">
-              {cart.map(item => (
-                <div key={item.product.id + item.size} className="flex gap-5 p-5 border border-border bg-card">
-                  <Link to={`/product/${item.product.slug}`} className="w-24 h-32 overflow-hidden flex-shrink-0 bg-surface-image border border-gold/10">
-                    <img src={item.product.images[0]} alt={item.product.name} className="w-full h-full object-cover" />
-                  </Link>
-                  <div className="flex-1 min-w-0">
-                    <Link to={`/product/${item.product.slug}`} className="font-heading text-[15px] text-foreground hover:text-gold transition-colors line-clamp-1">{item.product.name}</Link>
-                    <p className="text-[11px] text-muted-foreground mt-0.5">Size: {item.size}</p>
-                    <p className="text-[14px] font-semibold mt-1.5 font-body">{formatPrice(item.product.price)}</p>
-                    <div className="flex items-center gap-2 mt-3">
-                      <div className="flex items-center border border-border">
-                        <button onClick={() => updateCartQuantity(item.product.id, Math.max(1, item.quantity - 1))} className="p-1.5 hover:bg-muted/50"><Minus className="w-3 h-3" /></button>
-                        <span className="text-[12px] px-3 font-body">{item.quantity}</span>
-                        <button onClick={() => updateCartQuantity(item.product.id, item.quantity + 1)} className="p-1.5 hover:bg-muted/50"><Plus className="w-3 h-3" /></button>
-                      </div>
-                      <button onClick={() => removeFromCart(item.product.id)} className="ml-auto text-muted-foreground/40 hover:text-destructive transition-colors p-1">
-                        <Trash2 className="w-4 h-4" strokeWidth={1.5} />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="bg-champagne/50 border border-border p-7 h-fit lg:sticky lg:top-40">
-              <h3 className="heading-editorial text-foreground text-xl mb-5">Order Summary</h3>
-              <div className="space-y-3 text-[13px] border-b border-border pb-5 mb-5">
-                <div className="flex justify-between text-muted-foreground"><span>Subtotal</span><span className="text-foreground font-medium">{formatPrice(cartTotal)}</span></div>
-                <div className="flex justify-between text-muted-foreground"><span>Shipping</span><span>Calculated at checkout</span></div>
-                <div className="flex justify-between text-muted-foreground"><span>Tax (HST)</span><span>Calculated at checkout</span></div>
-              </div>
-              <div className="flex justify-between font-heading text-lg text-foreground mb-7"><span>Estimated Total</span><span>{formatPrice(cartTotal)}</span></div>
-              <button className="w-full btn-luxury btn-luxury-gold py-3.5 mb-3">Proceed to Checkout</button>
-              <Link to="/women" className="flex items-center justify-center gap-1.5 text-[11px] text-gold uppercase tracking-wider hover:text-gold-dark transition-colors">
-                Continue Shopping <ArrowRight className="w-3 h-3" />
-              </Link>
-            </div>
+      </section>
+      <section className="bg-[#FBF7EF] py-8 md:py-12">
+        <div className="container">
+          <div className="mx-auto flex min-h-[620px] max-w-[480px] flex-col overflow-hidden border border-[#E6D8C4] bg-[#FFFDF8] shadow-[0_24px_70px_rgba(58,17,23,0.07)]">
+            <CartContent />
           </div>
-        ) : (
-          <div className="text-center py-24">
-            <div className="w-16 h-16 mx-auto mb-6 rounded-full border border-border flex items-center justify-center">
-              <ShoppingBag className="w-6 h-6 text-gold/40" strokeWidth={1.5} />
-            </div>
-            <h3 className="font-heading text-2xl text-foreground mb-2">Your cart is empty</h3>
-            <p className="text-muted-foreground text-[13px] mb-8 max-w-sm mx-auto">Discover our curated collections and find something perfect for your next celebration.</p>
-            <Link to="/women" className="btn-luxury btn-luxury-gold">Explore Collections</Link>
-          </div>
-        )}
-      </div>
+        </div>
+      </section>
     </Layout>
   );
 }
@@ -232,7 +194,7 @@ export function SearchResultsPage() {
   const results = useMemo(() => {
     if (!query) return [];
     const q = query.toLowerCase();
-    return products.filter(p => p.name.toLowerCase().includes(q) || p.category.includes(q) || p.description.toLowerCase().includes(q) || p.occasion.some(o => o.toLowerCase().includes(q)));
+    return catalogProducts.filter(p => p.name.toLowerCase().includes(q) || p.category.includes(q) || p.description.toLowerCase().includes(q) || p.occasion.some(o => o.toLowerCase().includes(q)));
   }, [query]);
   return (
     <Layout>
@@ -551,7 +513,7 @@ export function TrackOrderPage() {
 }
 
 export function WomenPage() {
-  const items = products.filter(p => ['punjabi-suits','lehengas','sarees','anarkalis','sharara-gharara','gowns','dresses-kaftans','kurtis'].includes(p.category));
+  const items = catalogProducts.filter(p => ['punjabi-suits','lehengas','sarees','anarkalis','sharara-gharara','gowns','dresses-kaftans','kurtis'].includes(p.category));
   return (
     <CollectionListingPage
       title="Women"
@@ -565,7 +527,7 @@ export function WomenPage() {
 }
 
 export function MenPage() {
-  const items = products.filter(p => ['sherwanis','kurta-pajama','mens-jackets'].includes(p.category));
+  const items = catalogProducts.filter(p => ['sherwanis','kurta-pajama','mens-jackets'].includes(p.category));
   return (
     <CollectionListingPage
       title="Men"

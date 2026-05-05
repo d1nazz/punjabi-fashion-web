@@ -15,6 +15,20 @@ import bangles10 from '@/assets/products/accessories/bangles/bangles-10.png';
 import bangles11 from '@/assets/products/accessories/bangles/bangles-11.png';
 import bangles12 from '@/assets/products/accessories/bangles/bangles-12.png';
 import bangles13 from '@/assets/products/accessories/bangles/bangles-13.png';
+import bangle14 from '@/assets/products/accessories/bangles/bangle-14.png';
+import bangle15 from '@/assets/products/accessories/bangles/bangle-15.png';
+import bangle16 from '@/assets/products/accessories/bangles/bangle-16.png';
+import bangle17 from '@/assets/products/accessories/bangles/bangle-17.png';
+import bangle18 from '@/assets/products/accessories/bangles/bangle-18.png';
+import bangle19 from '@/assets/products/accessories/bangles/bangle-19.png';
+import bangle20 from '@/assets/products/accessories/bangles/bangle-20.png';
+import bangle21 from '@/assets/products/accessories/bangles/bangle-21.png';
+import bangle22 from '@/assets/products/accessories/bangles/bangle-22.png';
+import bangle23 from '@/assets/products/accessories/bangles/bangle-23.png';
+import bangle24 from '@/assets/products/accessories/bangles/bangle-24.png';
+import bangle25 from '@/assets/products/accessories/bangles/bangle-25.png';
+import bangle26 from '@/assets/products/accessories/bangles/bangle-26.png';
+import bangle27 from '@/assets/products/accessories/bangles/bangle-27.png';
 import earrings01 from '@/assets/products/accessories/earrings/earrings-01.png';
 import earrings02 from '@/assets/products/accessories/earrings/earrings-02.png';
 import earrings03 from '@/assets/products/accessories/earrings/earrings-03.png';
@@ -92,6 +106,8 @@ export interface Product {
   slug: string;
   price: number;
   compareAtPrice?: number;
+  /** ISO currency for checkout; defaults to CAD in UI when omitted */
+  currency?: 'CAD';
   category: string;
   subcategory?: string;
   collection?: string;
@@ -99,6 +115,10 @@ export interface Product {
   fabric?: string;
   color: string;
   colorFamily: string;
+  /** When multiple purchasable colour variants exist, list them for selectors */
+  colorOptions?: string[];
+  /** Optional tailoring / finishing choices */
+  stitchingOptions?: string[];
   occasion: string[];
   tags: string[];
   sizes: string[];
@@ -109,11 +129,17 @@ export interface Product {
   care?: string;
   fitNotes?: string;
   inStock: boolean;
+  /** High-level availability for checkout validation */
+  availability?: 'in_stock' | 'available_in_store_online';
+  /** Default true for tax display / Stripe tax behavior note */
+  taxable?: boolean;
+  shippingNote?: string;
   isNew?: boolean;
   isBestSeller?: boolean;
   isReadyToShip?: boolean;
   isBridal?: boolean;
   isSale?: boolean;
+  hidden?: boolean;
 }
 
 export interface Category {
@@ -142,7 +168,7 @@ export const categories: Category[] = [
   { name: 'Men\'s Jackets & Waistcoats', slug: 'mens-jackets', description: 'Elegant jackets and waistcoats for men', image: productSherwani, parent: 'men' },
   { name: 'Kids Collection', slug: 'kids', description: 'Adorable ethnic wear for little ones', image: productPunjabiSuit },
   { name: 'Accessories', slug: 'accessories', description: 'Complete your look with premium accessories', image: productSaree },
-  { name: 'Bangles', slug: 'bangles', description: 'Traditional and festive bangle sets', image: bangles01, parent: 'accessories' },
+  { name: 'Bangles', slug: 'bangles', description: 'Traditional and festive bangle sets for occasion styling', image: productSaree, parent: 'accessories' },
   { name: 'Earrings', slug: 'earrings', description: 'Traditional and statement earrings for festive styling', image: earrings01, parent: 'accessories' },
   { name: 'Necklaces', slug: 'necklaces', description: 'Traditional necklace sets and occasion-ready jewelry pieces', image: necklace01, parent: 'accessories' },
   { name: 'Jewelry', slug: 'jewelry', description: 'Exquisite jewelry for every occasion', image: productSaree },
@@ -203,19 +229,33 @@ export const products: Product[] = [
   { id: 'pw-s3-1', name: 'Red Traditional Party Wear Ensemble', slug: 'red-traditional-party-wear-ensemble-style-3-01', price: 249, category: 'party-wear', subcategory: 'Party Wear', collection: 'Party Wear Style 3', description: 'A red traditional party wear ensemble with a festive embroidered look and coordinated dupatta for celebrations, receptions, and special occasions.', color: 'Red', colorFamily: 'Red', occasion: ['Party', 'Reception', 'Festive'], tags: ['Party Wear', 'Style 3', 'Women', 'Occasion Wear', 'New'], sizes: womenSizes, images: [partyWearStyle301], sku: 'PF-PW-S3-001', embellishment: 'Embroidered and embellished finish', care: 'Dry clean only', fitNotes: 'Party wear set, sizes available', inStock: true, isNew: true },
 
   // BANGLES (13)
-  { id: 'bg-1', name: 'Multicolor Festive Bangle Set', slug: 'multicolor-festive-bangle-set-01', price: 39, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A multicolor South Asian bangle set with festive detailing, made to complete Punjabi suits, lehengas, and occasion wear looks.', color: 'Multicolor', colorFamily: 'Multi', occasion: ['Festive', 'Party', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangles01], sku: 'PF-BG-001', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isNew: true },
-  { id: 'bg-2', name: 'Burgundy Gold-Tone Bangle Set', slug: 'burgundy-gold-tone-bangle-set-02', price: 49, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A burgundy and gold-tone bangle set with a statement occasion look for festive gatherings, receptions, and wedding guest styling.', color: 'Burgundy and Gold-Tone', colorFamily: 'Red', occasion: ['Festive', 'Reception', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'Best Seller'], sizes: ['One Size'], images: [bangles02], sku: 'PF-BG-002', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isBestSeller: true },
-  { id: 'bg-3', name: 'Red Occasion Wear Bangle Set', slug: 'red-occasion-wear-bangle-set-03', price: 45, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A red occasion wear bangle set with gold-tone accents for traditional celebrations, festive events, and coordinated outfit styling.', color: 'Red and Gold-Tone', colorFamily: 'Red', occasion: ['Festive', 'Wedding Guest', 'Party'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangles03], sku: 'PF-BG-003', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isNew: true },
-  { id: 'bg-4', name: 'Orange Festive Bangle Set', slug: 'orange-festive-bangle-set-04', price: 45, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'An orange festive bangle set with gold-tone detailing for mehndi, haldi, and bright South Asian celebration looks.', color: 'Orange and Gold-Tone', colorFamily: 'Orange', occasion: ['Mehndi', 'Haldi', 'Festive'], tags: ['Bangles', 'Accessories'], sizes: ['One Size'], images: [bangles04], sku: 'PF-BG-004', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true },
-  { id: 'bg-5', name: 'Purple Statement Bangle Set', slug: 'purple-statement-bangle-set-05', price: 35, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A purple statement bangle set with gold-tone borders for pairing with party wear, festive outfits, and evening occasion looks.', color: 'Purple and Gold-Tone', colorFamily: 'Purple', occasion: ['Party', 'Reception', 'Festive'], tags: ['Bangles', 'Accessories'], sizes: ['One Size'], images: [bangles05], sku: 'PF-BG-005', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true },
-  { id: 'bg-6', name: 'Blue Embellished Bangle Set', slug: 'blue-embellished-bangle-set-06', price: 49, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A blue embellished bangle set with gold-tone accents for festive, reception, and wedding guest outfits.', color: 'Blue and Gold-Tone', colorFamily: 'Blue', occasion: ['Festive', 'Reception', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'Best Seller'], sizes: ['One Size'], images: [bangles06], sku: 'PF-BG-006', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isBestSeller: true },
-  { id: 'bg-7', name: 'Pink Festive Bangle Set', slug: 'pink-festive-bangle-set-07', price: 39, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A pink festive bangle set with gold-tone styling for soft occasion looks, family gatherings, and South Asian celebrations.', color: 'Pink and Gold-Tone', colorFamily: 'Pink', occasion: ['Festive', 'Wedding Guest', 'Party'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangles07], sku: 'PF-BG-007', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isNew: true },
-  { id: 'bg-8', name: 'Chocolate Statement Bangle Set', slug: 'chocolate-statement-bangle-set-08', price: 49, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A chocolate-toned statement bangle set with gold-tone detailing for elegant party, reception, and festive styling.', color: 'Chocolate and Gold-Tone', colorFamily: 'Brown', occasion: ['Party', 'Reception', 'Festive'], tags: ['Bangles', 'Accessories'], sizes: ['One Size'], images: [bangles08], sku: 'PF-BG-008', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true },
-  { id: 'bg-9', name: 'Orange Ivory Bangle Set', slug: 'orange-ivory-bangle-set-09', price: 45, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'An orange and ivory bangle set with festive gold-tone accents for colorful celebration looks and traditional outfit styling.', color: 'Orange and Ivory', colorFamily: 'Orange', occasion: ['Festive', 'Mehndi', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'Ready to Ship'], sizes: ['One Size'], images: [bangles09], sku: 'PF-BG-009', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isReadyToShip: true },
-  { id: 'bg-10', name: 'Olive Gold-Tone Bangle Set', slug: 'olive-gold-tone-bangle-set-10', price: 39, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'An olive and gold-tone bangle set with traditional styling for festive outfits, Punjabi suits, and wedding guest looks.', color: 'Olive and Gold-Tone', colorFamily: 'Green', occasion: ['Festive', 'Wedding Guest', 'Party'], tags: ['Bangles', 'Accessories'], sizes: ['One Size'], images: [bangles10], sku: 'PF-BG-010', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true },
-  { id: 'bg-11', name: 'Maroon Embellished Bangle Set', slug: 'maroon-embellished-bangle-set-11', price: 45, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A maroon embellished bangle set with a polished occasion look for festive events, parties, and wedding guest styling.', color: 'Maroon', colorFamily: 'Red', occasion: ['Festive', 'Party', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'Ready to Ship'], sizes: ['One Size'], images: [bangles11], sku: 'PF-BG-011', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isReadyToShip: true },
-  { id: 'bg-12', name: 'Lavender Occasion Wear Bangle Set', slug: 'lavender-occasion-wear-bangle-set-12', price: 45, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A lavender occasion wear bangle set with gold-tone accents for feminine festive styling and coordinated South Asian looks.', color: 'Lavender and Gold-Tone', colorFamily: 'Purple', occasion: ['Festive', 'Wedding Guest', 'Party'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangles12], sku: 'PF-BG-012', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isNew: true },
-  { id: 'bg-13', name: 'Turquoise Traditional Bangle Set', slug: 'turquoise-traditional-bangle-set-13', price: 49, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A turquoise traditional bangle set with gold-tone detailing for festive outfits, mehndi looks, and special celebration styling.', color: 'Turquoise and Gold-Tone', colorFamily: 'Blue', occasion: ['Festive', 'Mehndi', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangles13], sku: 'PF-BG-013', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isNew: true },
+  { id: 'bg-1', name: 'Multicolor Festive Bangle Set', slug: 'multicolor-festive-bangle-set-01', price: 39, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A multicolor South Asian bangle set with festive detailing, made to complete Punjabi suits, lehengas, and occasion wear looks.', color: 'Multicolor', colorFamily: 'Multi', occasion: ['Festive', 'Party', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangles01], sku: 'PF-BG-001', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isNew: true, hidden: true },
+  { id: 'bg-2', name: 'Burgundy Gold-Tone Bangle Set', slug: 'burgundy-gold-tone-bangle-set-02', price: 49, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A burgundy and gold-tone bangle set with a statement occasion look for festive gatherings, receptions, and wedding guest styling.', color: 'Burgundy and Gold-Tone', colorFamily: 'Red', occasion: ['Festive', 'Reception', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'Best Seller'], sizes: ['One Size'], images: [bangles02], sku: 'PF-BG-002', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isBestSeller: true, hidden: true },
+  { id: 'bg-3', name: 'Red Occasion Wear Bangle Set', slug: 'red-occasion-wear-bangle-set-03', price: 45, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A red occasion wear bangle set with gold-tone accents for traditional celebrations, festive events, and coordinated outfit styling.', color: 'Red and Gold-Tone', colorFamily: 'Red', occasion: ['Festive', 'Wedding Guest', 'Party'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangles03], sku: 'PF-BG-003', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isNew: true, hidden: true },
+  { id: 'bg-4', name: 'Orange Festive Bangle Set', slug: 'orange-festive-bangle-set-04', price: 45, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'An orange festive bangle set with gold-tone detailing for mehndi, haldi, and bright South Asian celebration looks.', color: 'Orange and Gold-Tone', colorFamily: 'Orange', occasion: ['Mehndi', 'Haldi', 'Festive'], tags: ['Bangles', 'Accessories'], sizes: ['One Size'], images: [bangles04], sku: 'PF-BG-004', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, hidden: true },
+  { id: 'bg-5', name: 'Purple Statement Bangle Set', slug: 'purple-statement-bangle-set-05', price: 35, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A purple statement bangle set with gold-tone borders for pairing with party wear, festive outfits, and evening occasion looks.', color: 'Purple and Gold-Tone', colorFamily: 'Purple', occasion: ['Party', 'Reception', 'Festive'], tags: ['Bangles', 'Accessories'], sizes: ['One Size'], images: [bangles05], sku: 'PF-BG-005', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, hidden: true },
+  { id: 'bg-6', name: 'Blue Embellished Bangle Set', slug: 'blue-embellished-bangle-set-06', price: 49, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A blue embellished bangle set with gold-tone accents for festive, reception, and wedding guest outfits.', color: 'Blue and Gold-Tone', colorFamily: 'Blue', occasion: ['Festive', 'Reception', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'Best Seller'], sizes: ['One Size'], images: [bangles06], sku: 'PF-BG-006', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isBestSeller: true, hidden: true },
+  { id: 'bg-7', name: 'Pink Festive Bangle Set', slug: 'pink-festive-bangle-set-07', price: 39, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A pink festive bangle set with gold-tone styling for soft occasion looks, family gatherings, and South Asian celebrations.', color: 'Pink and Gold-Tone', colorFamily: 'Pink', occasion: ['Festive', 'Wedding Guest', 'Party'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangles07], sku: 'PF-BG-007', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isNew: true, hidden: true },
+  { id: 'bg-8', name: 'Chocolate Statement Bangle Set', slug: 'chocolate-statement-bangle-set-08', price: 49, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A chocolate-toned statement bangle set with gold-tone detailing for elegant party, reception, and festive styling.', color: 'Chocolate and Gold-Tone', colorFamily: 'Brown', occasion: ['Party', 'Reception', 'Festive'], tags: ['Bangles', 'Accessories'], sizes: ['One Size'], images: [bangles08], sku: 'PF-BG-008', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, hidden: true },
+  { id: 'bg-9', name: 'Orange Ivory Bangle Set', slug: 'orange-ivory-bangle-set-09', price: 45, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'An orange and ivory bangle set with festive gold-tone accents for colorful celebration looks and traditional outfit styling.', color: 'Orange and Ivory', colorFamily: 'Orange', occasion: ['Festive', 'Mehndi', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'Ready to Ship'], sizes: ['One Size'], images: [bangles09], sku: 'PF-BG-009', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isReadyToShip: true, hidden: true },
+  { id: 'bg-10', name: 'Olive Gold-Tone Bangle Set', slug: 'olive-gold-tone-bangle-set-10', price: 39, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'An olive and gold-tone bangle set with traditional styling for festive outfits, Punjabi suits, and wedding guest looks.', color: 'Olive and Gold-Tone', colorFamily: 'Green', occasion: ['Festive', 'Wedding Guest', 'Party'], tags: ['Bangles', 'Accessories'], sizes: ['One Size'], images: [bangles10], sku: 'PF-BG-010', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, hidden: true },
+  { id: 'bg-11', name: 'Maroon Embellished Bangle Set', slug: 'maroon-embellished-bangle-set-11', price: 45, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A maroon embellished bangle set with a polished occasion look for festive events, parties, and wedding guest styling.', color: 'Maroon', colorFamily: 'Red', occasion: ['Festive', 'Party', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'Ready to Ship'], sizes: ['One Size'], images: [bangles11], sku: 'PF-BG-011', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isReadyToShip: true, hidden: true },
+  { id: 'bg-12', name: 'Lavender Occasion Wear Bangle Set', slug: 'lavender-occasion-wear-bangle-set-12', price: 45, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A lavender occasion wear bangle set with gold-tone accents for feminine festive styling and coordinated South Asian looks.', color: 'Lavender and Gold-Tone', colorFamily: 'Purple', occasion: ['Festive', 'Wedding Guest', 'Party'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangles12], sku: 'PF-BG-012', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isNew: true, hidden: true },
+  { id: 'bg-13', name: 'Turquoise Traditional Bangle Set', slug: 'turquoise-traditional-bangle-set-13', price: 49, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A turquoise traditional bangle set with gold-tone detailing for festive outfits, mehndi looks, and special celebration styling.', color: 'Turquoise and Gold-Tone', colorFamily: 'Blue', occasion: ['Festive', 'Mehndi', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangles13], sku: 'PF-BG-013', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size bangle set', inStock: true, isNew: true, hidden: true },
+  { id: 'bg-14', name: 'Orange Gold-Tone Bangle Set', slug: 'orange-gold-tone-bangle-set-14', price: 49, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A festive bangle set with traditional colour and shine, selected to finish Punjabi suits, lehengas, and party wear.', color: 'Orange and Gold-Tone', colorFamily: 'Orange', occasion: ['Festive', 'Wedding Guest', 'Party'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangle14], sku: 'PF-BG-014', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'South Asian bangle set. In-store availability may vary.', inStock: true, isNew: true },
+  { id: 'bg-15', name: 'Blue Traditional Bangle Set', slug: 'blue-traditional-bangle-set-15', price: 39, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A South Asian bangle set designed to pair with embroidered suits, shararas, and occasion outfits.', color: 'Blue and Gold-Tone', colorFamily: 'Blue', occasion: ['Festive', 'Party', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangle15], sku: 'PF-BG-015', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'South Asian bangle set. In-store availability may vary.', inStock: true, isNew: true },
+  { id: 'bg-16', name: 'Navy Gold-Tone Bangle Set', slug: 'navy-gold-tone-bangle-set-16', price: 49, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A statement bangle set for celebrations, family events, and boutique styling.', color: 'Navy and Gold-Tone', colorFamily: 'Blue', occasion: ['Festive', 'Reception', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangle16], sku: 'PF-BG-016', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'South Asian bangle set. In-store availability may vary.', inStock: true, isNew: true },
+  { id: 'bg-17', name: 'Pink Gold-Tone Bangle Set', slug: 'pink-gold-tone-bangle-set-17', price: 49, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A festive bangle set with soft colour and shine for Punjabi suits, lehengas, and occasion outfits.', color: 'Pink and Gold-Tone', colorFamily: 'Pink', occasion: ['Festive', 'Wedding Guest', 'Party'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangle17], sku: 'PF-BG-017', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'South Asian bangle set. In-store availability may vary.', inStock: true, isNew: true },
+  { id: 'bg-18', name: 'Turquoise Gold-Tone Bangle Set', slug: 'turquoise-gold-tone-bangle-set-18', price: 49, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A bright bangle set with traditional colour and shine, selected for festive and occasion styling.', color: 'Turquoise and Gold-Tone', colorFamily: 'Blue', occasion: ['Festive', 'Mehndi', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangle18], sku: 'PF-BG-018', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'South Asian bangle set. In-store availability may vary.', inStock: true, isNew: true },
+  { id: 'bg-19', name: 'Multicolor Charm Bangle Set', slug: 'multicolor-charm-bangle-set-19', price: 59, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A colourful bangle set with festive charm details for celebrations, family events, and boutique styling.', color: 'Multicolor and Gold-Tone', colorFamily: 'Multi', occasion: ['Festive', 'Mehndi', 'Party'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangle19], sku: 'PF-BG-019', embellishment: 'Embellished finish with charm details', care: 'Store separately and avoid moisture', fitNotes: 'South Asian bangle set. In-store availability may vary.', inStock: true, isNew: true },
+  { id: 'bg-20', name: 'Blush Pink Bangle Set', slug: 'blush-pink-bangle-set-20', price: 39, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A soft pink bangle set for festive outfits, family gatherings, and everyday boutique styling.', color: 'Blush Pink and Gold-Tone', colorFamily: 'Pink', occasion: ['Festive', 'Wedding Guest', 'Casual'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangle20], sku: 'PF-BG-020', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'South Asian bangle set. In-store availability may vary.', inStock: true, isNew: true },
+  { id: 'bg-21', name: 'Olive Green Bangle Set', slug: 'olive-green-bangle-set-21', price: 49, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A rich green bangle set selected to finish Punjabi suits, party wear, and festive looks.', color: 'Olive Green and Gold-Tone', colorFamily: 'Green', occasion: ['Festive', 'Wedding Guest', 'Party'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangle21], sku: 'PF-BG-021', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'South Asian bangle set. In-store availability may vary.', inStock: true, isNew: true },
+  { id: 'bg-22', name: 'Maroon Stone-Detail Bangle Set', slug: 'maroon-stone-detail-bangle-set-22', price: 59, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A statement bangle set with deep colour and embellished detail for festive and occasion wear.', color: 'Maroon and Gold-Tone', colorFamily: 'Red', occasion: ['Festive', 'Reception', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangle22], sku: 'PF-BG-022', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'South Asian bangle set. In-store availability may vary.', inStock: true, isNew: true },
+  { id: 'bg-23', name: 'Multicolor Stone Charm Bangle Set', slug: 'multicolor-stone-charm-bangle-set-23', price: 59, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A colourful statement bangle set for celebrations, mehndi looks, and complete occasion styling.', color: 'Multicolor and Gold-Tone', colorFamily: 'Multi', occasion: ['Festive', 'Mehndi', 'Party'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangle23], sku: 'PF-BG-023', embellishment: 'Embellished finish with charm details', care: 'Store separately and avoid moisture', fitNotes: 'South Asian bangle set. In-store availability may vary.', inStock: true, isNew: true },
+  { id: 'bg-24', name: 'Red Charm Bangle Set', slug: 'red-charm-bangle-set-24', price: 59, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A red bangle set with festive charm details, selected for party wear and South Asian celebration looks.', color: 'Red and Gold-Tone', colorFamily: 'Red', occasion: ['Festive', 'Party', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangle24], sku: 'PF-BG-024', embellishment: 'Embellished finish with charm details', care: 'Store separately and avoid moisture', fitNotes: 'South Asian bangle set. In-store availability may vary.', inStock: true, isNew: true },
+  { id: 'bg-25', name: 'Burgundy Silver-Tone Bangle Set', slug: 'burgundy-silver-tone-bangle-set-25', price: 39, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A burgundy bangle set with a polished occasion look for suits, shararas, and festive styling.', color: 'Burgundy and Silver-Tone', colorFamily: 'Red', occasion: ['Festive', 'Wedding Guest', 'Party'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangle25], sku: 'PF-BG-025', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'South Asian bangle set. In-store availability may vary.', inStock: true, isNew: true },
+  { id: 'bg-26', name: 'Red Gold-Tone Bangle Set', slug: 'red-gold-tone-bangle-set-26', price: 49, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A red bangle set with traditional shine for festive outfits, family events, and boutique styling.', color: 'Red and Gold-Tone', colorFamily: 'Red', occasion: ['Festive', 'Wedding Guest', 'Party'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangle26], sku: 'PF-BG-026', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'South Asian bangle set. In-store availability may vary.', inStock: true, isNew: true },
+  { id: 'bg-27', name: 'Deep Red Charm Bangle Set', slug: 'deep-red-charm-bangle-set-27', price: 59, category: 'bangles', subcategory: 'Bangles', collection: 'Punjabi Fashion Bangles', description: 'A deep red bangle set with festive charm details for South Asian occasion wear and celebration styling.', color: 'Deep Red and Gold-Tone', colorFamily: 'Red', occasion: ['Festive', 'Reception', 'Wedding Guest'], tags: ['Bangles', 'Accessories', 'New'], sizes: ['One Size'], images: [bangle27], sku: 'PF-BG-027', embellishment: 'Embellished finish with charm details', care: 'Store separately and avoid moisture', fitNotes: 'South Asian bangle set. In-store availability may vary.', inStock: true, isNew: true },
 
   // EARRINGS (23)
   { id: 'er-1', name: 'Purple Gold-Tone Jhumka Earrings', slug: 'purple-gold-tone-jhumka-earrings-01', price: 29, category: 'accessories', subcategory: 'Earrings', collection: 'Punjabi Fashion Earrings', description: 'Purple gold-tone jhumka earrings with a festive embellished finish for Punjabi suits, lehengas, and South Asian occasion wear.', color: 'Purple and Gold-Tone', colorFamily: 'Purple', occasion: ['Festive', 'Party', 'Wedding Guest'], tags: ['Accessories', 'Earrings', 'New'], sizes: ['One Size'], images: [earrings01], sku: 'PF-ER-001', embellishment: 'Embellished finish', care: 'Store separately and avoid moisture', fitNotes: 'One size earring pair', inStock: true, isNew: true },
@@ -256,10 +296,26 @@ export const products: Product[] = [
 const normalizeCategoryValue = (value: string): string =>
   value.toLowerCase().replace(/&/g, '').replace(/\s+/g, '-');
 
+export const isBangleProduct = (product: Product): boolean => {
+  const searchableValues = [
+    product.id,
+    product.slug,
+    product.category,
+    product.subcategory ?? '',
+    ...product.tags,
+  ].map(normalizeCategoryValue);
+
+  return searchableValues.some((value) => value.includes('bangle') || value.includes('bangles'));
+};
+
+export const isCatalogProduct = (product: Product): boolean => product.hidden !== true;
+
+export const catalogProducts: Product[] = products.filter(isCatalogProduct);
+
 export const getProductsByCategory = (categorySlug: string): Product[] => {
   const normalizedSlug = normalizeCategoryValue(categorySlug);
 
-  return products.filter((p) => {
+  return catalogProducts.filter((p) => {
     const category = normalizeCategoryValue(p.category);
     const subcategory = p.subcategory ? normalizeCategoryValue(p.subcategory) : '';
     const tags = p.tags.map(normalizeCategoryValue);
@@ -269,22 +325,25 @@ export const getProductsByCategory = (categorySlug: string): Product[] => {
 };
 
 export const getProductsByTag = (tag: string): Product[] =>
-  products.filter(p => p.tags.includes(tag));
+  catalogProducts.filter(p => p.tags.includes(tag));
 
 export const getNewArrivals = (): Product[] =>
-  products.filter(p => p.isNew);
+  catalogProducts.filter(p => p.isNew);
 
 export const getBridalProducts = (): Product[] =>
-  products.filter(p => p.isBridal);
+  catalogProducts.filter(p => p.isBridal);
 
 export const getReadyToShip = (): Product[] =>
-  products.filter(p => p.isReadyToShip);
+  catalogProducts.filter(p => p.isReadyToShip);
 
 export const getSaleProducts = (): Product[] =>
-  products.filter(p => p.isSale);
+  catalogProducts.filter(p => p.isSale);
 
 export const getProductBySlug = (slug: string): Product | undefined =>
-  products.find(p => p.slug === slug);
+  catalogProducts.find(p => p.slug === slug);
+
+export const getProductById = (id: string): Product | undefined =>
+  catalogProducts.find(p => p.id === id);
 
 export const getCategoryBySlug = (slug: string): Category | undefined =>
   categories.find(c => c.slug === slug);
@@ -296,10 +355,10 @@ export const getMenCategories = (): Category[] =>
   categories.filter(c => c.parent === 'men');
 
 export const getPartyWearProducts = (): Product[] =>
-  products.filter(p => p.category === 'party-wear');
+  catalogProducts.filter(p => p.category === 'party-wear');
 
 export const getFestiveProducts = (): Product[] =>
-  products.filter(p => p.occasion.includes('Festive'));
+  catalogProducts.filter(p => p.occasion.includes('Festive'));
 
 export const formatPrice = (price: number): string =>
   `$${price.toLocaleString('en-CA')} CAD`;

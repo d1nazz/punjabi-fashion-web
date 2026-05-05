@@ -1,34 +1,164 @@
 import { useParams, Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Heart, Minus, Plus, Truck, RotateCcw, Shield, Calendar, Phone, Sparkles } from 'lucide-react';
 import Layout from '@/components/Layout';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ProductCard from '@/components/ProductCard';
-import { getProductBySlug, formatPrice, products } from '@/data/products';
+import { catalogProducts, getProductBySlug, formatPrice } from '@/data/products';
 import { useStore } from '@/contexts/StoreContext';
 import { businessInfo } from '@/data/businessInfo';
+import type { SelectedProductOptions } from '@/types/commerce';
+import { startStripeCheckoutSession } from '@/services/checkout';
+import { buildCartLineItem } from '@/utils/cartLine';
+import {
+  productRequiresColorChoice,
+  productRequiresExplicitSize,
+  productRequiresStitchingChoice,
+} from '@/utils/productPurchase';
 
 export default function ProductDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const product = slug ? getProductBySlug(slug) : undefined;
   const { addToCart, toggleWishlist, isInWishlist } = useStore();
   const [selectedSize, setSelectedSize] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedStitching, setSelectedStitching] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<'description' | 'details' | 'care'>('description');
+  const [pdpActionError, setPdpActionError] = useState<string | null>(null);
+  const [addLoading, setAddLoading] = useState(false);
+  const [buyNowLoading, setBuyNowLoading] = useState(false);
+
+  useEffect(() => {
+    setSelectedSize('');
+    setSelectedColor('');
+    setSelectedStitching('');
+    setQuantity(1);
+    setPdpActionError(null);
+    setBuyNowLoading(false);
+    setAddLoading(false);
+  }, [slug]);
+
+  useEffect(() => {
+    if (!product?.id) return;
+    const cOpts = product.colorOptions;
+    if (cOpts?.length === 1) {
+      setSelectedColor(cOpts[0]);
+    } else {
+      setSelectedColor('');
+    }
+    const sOpts = product.stitchingOptions;
+    if (sOpts?.length === 1) {
+      setSelectedStitching(sOpts[0]);
+    } else {
+      setSelectedStitching('');
+    }
+  }, [product?.id]);
 
   if (!product) {
     return <Layout><div className="container py-24 text-center"><div className="divider-ornament mb-6"><span className="text-gold/30 text-[8px]">◆</span></div><h1 className="font-heading text-3xl">Product Not Found</h1></div></Layout>;
   }
 
   const wishlisted = isInWishlist(product.id);
-  const relatedProducts = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
-  const isJewelryProduct = ['Earrings', 'Necklaces'].includes(product.subcategory ?? '') || product.category === 'necklaces';
+  const relatedProducts = catalogProducts.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
+  const isJewelryProduct = ['Bangles', 'Earrings', 'Necklaces'].includes(product.subcategory ?? '') || ['bangles', 'necklaces'].includes(product.category);
   const imageFitClass = isJewelryProduct ? 'object-contain' : 'object-cover';
 
-  const handleAddToCart = () => {
-    if (!selectedSize && product.sizes.length > 1) return;
-    addToCart(product, quantity, selectedSize || product.sizes[0]);
+  const buildSelections = (): SelectedProductOptions => {
+    const autoSize =
+      product.sizes.length === 1
+        ? product.sizes[0]
+        : selectedSize.trim();
+    const color =
+      productRequiresColorChoice(product)
+        ? selectedColor.trim()
+        : undefined;
+    const stitching =
+      productRequiresStitchingChoice(product)
+        ? selectedStitching.trim()
+        : undefined;
+    return {
+      size: autoSize,
+      ...(color ? { color } : {}),
+      ...(stitching ? { stitchingType: stitching } : {}),
+    };
   };
+
+  const handleAddToCart = () => {
+    setPdpActionError(null);
+    if (!product.inStock) {
+      setPdpActionError('This piece is currently unavailable.');
+      return;
+    }
+    if (quantity < 1 || quantity > 50) {
+      setPdpActionError('Please choose between 1 and 50.');
+      return;
+    }
+    if (productRequiresExplicitSize(product) && !selectedSize) {
+      setPdpActionError('Please select a size before adding to cart.');
+      return;
+    }
+    if (productRequiresColorChoice(product) && !selectedColor.trim()) {
+      setPdpActionError('Please select a colour before adding to cart.');
+      return;
+    }
+    if (productRequiresStitchingChoice(product) && !selectedStitching.trim()) {
+      setPdpActionError('Please select a stitching option before adding to cart.');
+      return;
+    }
+
+    const opts = buildSelections();
+    setAddLoading(true);
+    const res = addToCart(product, quantity, opts);
+    setAddLoading(false);
+    if (!res.ok) {
+      setPdpActionError(res.message);
+    }
+  };
+
+  const handleBuyNow = async () => {
+    setPdpActionError(null);
+    if (!product.inStock) {
+      setPdpActionError('This piece is currently unavailable.');
+      return;
+    }
+    if (quantity < 1 || quantity > 50) {
+      setPdpActionError('Please choose between 1 and 50.');
+      return;
+    }
+    if (productRequiresExplicitSize(product) && !selectedSize) {
+      setPdpActionError('Please select a size before continuing to checkout.');
+      return;
+    }
+    if (productRequiresColorChoice(product) && !selectedColor.trim()) {
+      setPdpActionError('Please select a colour before continuing to checkout.');
+      return;
+    }
+    if (productRequiresStitchingChoice(product) && !selectedStitching.trim()) {
+      setPdpActionError('Please select a stitching option before continuing to checkout.');
+      return;
+    }
+
+    if (buyNowLoading) return;
+
+    const opts = buildSelections();
+    const line = buildCartLineItem(product, quantity, opts);
+
+    setBuyNowLoading(true);
+    const result = await startStripeCheckoutSession([line]);
+    setBuyNowLoading(false);
+    if ('error' in result) {
+      setPdpActionError(result.error);
+      return;
+    }
+    window.location.assign(result.url);
+  };
+
+  const availabilityLabel = !product.inStock
+    ? 'Currently unavailable for online checkout.'
+    : product.availability === 'available_in_store_online'
+      ? 'Available online and in boutique (subject to stock).'
+      : 'In stock for online checkout (subject to final confirmation).';
 
   return (
     <Layout>
@@ -64,10 +194,14 @@ export default function ProductDetailPage() {
 
           {/* Product Details */}
           <div className="lg:py-4">
-            <h1 className="heading-editorial text-foreground text-2xl md:text-3xl lg:text-[2.25rem] mb-4">{product.name}</h1>
-            
+            <h1 className="heading-editorial text-foreground text-2xl md:text-3xl lg:text-[2.25rem] mb-2">{product.name}</h1>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/70">
+              {(product.subcategory ?? product.category.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()))}{' '}
+              · SKU {product.sku} · {product.currency ?? 'CAD'}
+            </p>
+
             {/* Price */}
-            <div className="flex items-baseline gap-3 mb-6 pb-6 border-b border-border">
+            <div className="flex items-baseline gap-3 mb-4 mt-4 pb-4 border-b border-border">
               <span className="font-heading text-2xl text-foreground">{formatPrice(product.price)}</span>
               {product.compareAtPrice && (
                 <>
@@ -79,7 +213,53 @@ export default function ProductDetailPage() {
               )}
             </div>
 
+            <p className="text-[12px] leading-relaxed text-muted-foreground/90 mb-4">{availabilityLabel}</p>
+
             <p className="text-muted-foreground font-body text-[14px] leading-relaxed mb-6">{product.description}</p>
+
+            {/* Colour selector */}
+            {productRequiresColorChoice(product) && (
+              <div className="mb-6">
+                <h3 className="label-luxury text-foreground mb-3">Select Colour</h3>
+                <div className="flex flex-wrap gap-2">
+                  {product.colorOptions!.map((c) => (
+                    <button key={c} type="button" onClick={() => setSelectedColor(c)}
+                      className={`min-h-[44px] min-w-[48px] px-4 border text-[12px] tracking-wide transition-all duration-300 ${
+                        selectedColor === c
+                          ? 'border-gold bg-gold/10 text-gold-dark font-semibold'
+                          : 'border-border text-muted-foreground hover:border-gold/50 hover:text-foreground'
+                      }`}>
+                      {c}
+                    </button>
+                  ))}
+                </div>
+                {!selectedColor && (
+                  <p className="text-[11px] text-muted-foreground/50 mt-2">Please select a colour to continue</p>
+                )}
+              </div>
+            )}
+
+            {/* Stitching selector */}
+            {productRequiresStitchingChoice(product) && (
+              <div className="mb-6">
+                <h3 className="label-luxury text-foreground mb-3">Tailoring Option</h3>
+                <div className="flex flex-wrap gap-2">
+                  {product.stitchingOptions!.map((st) => (
+                    <button key={st} type="button" onClick={() => setSelectedStitching(st)}
+                      className={`min-h-[44px] min-w-[48px] px-4 border text-[12px] tracking-wide transition-all duration-300 ${
+                        selectedStitching === st
+                          ? 'border-gold bg-gold/10 text-gold-dark font-semibold'
+                          : 'border-border text-muted-foreground hover:border-gold/50 hover:text-foreground'
+                      }`}>
+                      {st}
+                    </button>
+                  ))}
+                </div>
+                {!selectedStitching && (
+                  <p className="text-[11px] text-muted-foreground/50 mt-2">Please select tailoring to continue</p>
+                )}
+              </div>
+            )}
 
             {/* Size Selector */}
             {product.sizes.length > 1 && (
@@ -90,8 +270,8 @@ export default function ProductDetailPage() {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {product.sizes.map(s => (
-                    <button key={s} onClick={() => setSelectedSize(s)}
-                      className={`min-w-[48px] h-11 px-4 border text-[12px] tracking-wide transition-all duration-300 ${
+                    <button key={s} type="button" onClick={() => setSelectedSize(s)}
+                      className={`min-h-[44px] min-w-[48px] h-11 px-4 border text-[12px] tracking-wide transition-all duration-300 ${
                         selectedSize === s
                           ? 'border-gold bg-gold/10 text-gold-dark font-semibold'
                           : 'border-border text-muted-foreground hover:border-gold/50 hover:text-foreground'
@@ -106,20 +286,27 @@ export default function ProductDetailPage() {
               </div>
             )}
 
-            {/* Quantity + Add to Cart */}
-            <div className="flex gap-3 mb-4">
-              <div className="flex items-center border border-border">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="p-3 hover:bg-muted/50 transition-colors">
+            {/* Quantity + actions */}
+            {pdpActionError && (
+              <p className="mb-3 text-[13px] text-[#8A1F2D]" role="alert">{pdpActionError}</p>
+            )}
+            <div className="flex flex-col gap-3 mb-4 sm:flex-row sm:items-stretch">
+              <div className="flex shrink-0 items-center justify-center border border-border sm:h-auto">
+                <button type="button" onClick={() => setQuantity(Math.max(1, quantity - 1))} disabled={buyNowLoading || addLoading || !product.inStock} className="p-3 hover:bg-muted/50 transition-colors disabled:opacity-40">
                   <Minus className="w-3.5 h-3.5" strokeWidth={1.5} />
                 </button>
                 <span className="px-5 text-[13px] font-body font-semibold min-w-[40px] text-center">{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)} className="p-3 hover:bg-muted/50 transition-colors">
+                <button type="button" onClick={() => setQuantity(Math.min(50, quantity + 1))} disabled={buyNowLoading || addLoading || !product.inStock} className="p-3 hover:bg-muted/50 transition-colors disabled:opacity-40">
                   <Plus className="w-3.5 h-3.5" strokeWidth={1.5} />
                 </button>
               </div>
-              <button onClick={handleAddToCart}
-                className="flex-1 btn-luxury btn-luxury-gold py-3.5">
-                Add to Cart
+              <button type="button" onClick={handleAddToCart} disabled={addLoading || buyNowLoading || !product.inStock}
+                className="btn-luxury btn-luxury-gold flex-1 shrink min-h-[52px] py-3.5 disabled:pointer-events-none disabled:opacity-50">
+                {addLoading ? 'Adding…' : 'Add to Cart'}
+              </button>
+              <button type="button" onClick={handleBuyNow} disabled={buyNowLoading || addLoading || !product.inStock}
+                className="btn-luxury border border-[#5C1B24]/35 bg-transparent text-[11px] font-semibold uppercase tracking-[0.14em] text-[#5C1B24] flex-1 shrink min-h-[52px] py-3.5 transition-colors hover:bg-[#5C1B24]/06 disabled:pointer-events-none disabled:opacity-50">
+                {buyNowLoading ? 'Redirecting…' : 'Buy Now'}
               </button>
             </div>
 

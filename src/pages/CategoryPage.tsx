@@ -122,6 +122,7 @@ export default function CategoryPage() {
       ? [{ name: 'Shop' }, { name: displayTitle }]
       : [{ name: 'Shop' }, { name: meta.parent, path: parentPath }, { name: displayTitle }]
     : [{ name: 'Shop' }, { name: displayTitle }];
+  const isBanglesPage = slug === 'bangles';
 
   return (
     <Layout>
@@ -187,6 +188,22 @@ export default function CategoryPage() {
             {sortedProducts.length > 0 ? (
               <div className={`grid grid-cols-2 ${filtersOpen ? 'md:grid-cols-3' : 'md:grid-cols-3 lg:grid-cols-4'} gap-4 md:gap-6`}>
                 {sortedProducts.map(p => <ProductCard key={p.id} product={p} />)}
+              </div>
+            ) : isBanglesPage ? (
+              <div className="border border-[#E6D8C4] bg-[#FFFDF8] px-6 py-16 text-center shadow-[0_22px_70px_rgba(58,17,23,0.06)] md:px-10 md:py-20">
+                <div className="divider-ornament mb-6"><span className="text-gold/40 text-[8px]">◆</span></div>
+                <p className="label-editorial mb-3 text-[#5C1B24]">Collection Update</p>
+                <h3 className="heading-editorial text-3xl text-[#3A1117] md:text-4xl">Bangles</h3>
+                <p className="mx-auto mt-4 max-w-xl text-[14px] leading-relaxed text-muted-foreground md:text-[15px]">
+                  Our bangle collection is being updated with new pieces.
+                </p>
+                <p className="mx-auto mt-3 max-w-xl text-[13px] leading-relaxed text-muted-foreground">
+                  New bangle styles will be added soon. Visit our Brampton boutique or contact us for current in-store availability.
+                </p>
+                <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+                  <Link to="/visit-store" className="btn-luxury btn-luxury-gold justify-center">Visit Store</Link>
+                  <Link to="/contact" className="btn-luxury btn-luxury-outline justify-center">Contact Us</Link>
+                </div>
               </div>
             ) : (
               <div className="text-center py-24">

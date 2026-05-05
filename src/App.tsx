@@ -14,6 +14,7 @@ import AboutPage, { VisitStorePage, ContactPage } from "./pages/AboutPage.tsx";
 import FAQPage from "./pages/FAQPage.tsx";
 import { ShippingPolicyPage, ShippingDeliveryPage, ReturnsPolicyPage, PrivacyPolicyPage, TermsPage } from "./pages/PolicyPages.tsx";
 import { WishlistPage, CartPage, AccountPage, SearchResultsPage, NewArrivalsPage, ReadyToShipPage, SalePage, SizeGuidePage, TrackOrderPage, WomenPage, MenPage } from "./pages/ShopPages.tsx";
+import { CheckoutCancelPage, CheckoutSuccessPage } from "./pages/CheckoutPages.tsx";
 import { localBusinessJsonLd } from "@/data/businessInfo";
 
 const queryClient = new QueryClient();
@@ -54,6 +55,8 @@ const App = () => (
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/wishlist" element={<WishlistPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout/success" element={<CheckoutSuccessPage />} />
+            <Route path="/checkout/cancel" element={<CheckoutCancelPage />} />
             <Route path="/account" element={<AccountPage />} />
             <Route path="/search" element={<SearchResultsPage />} />
             <Route path="/sale" element={<SalePage />} />
