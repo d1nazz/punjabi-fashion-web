@@ -41,6 +41,11 @@ type ParsedLine = {
 
 const MAX_QTY = 50;
 
+/** Cart subtotal (goods only) in CAD cents — sync with `src/constants/shipping.ts` display amount. */
+const FREE_SHIPPING_THRESHOLD_CENTS = 34000;
+const STANDARD_SHIPPING_CENTS = 1500;
+const SHIPPING_COUNTRIES = ['CA'] as const;
+
 const cors: Record<string, string> = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -150,6 +155,50 @@ function validateAndNormalize(lines: IncomingLine[]): { ok: true; normalized: Pa
   return { ok: true, normalized };
 }
 
+function serverCartSubtotalCents(lines: ParsedLine[]): number {
+  let total = 0;
+  for (const line of lines) {
+    const entry = catalogById.get(line.productId);
+    if (!entry) continue;
+    total += Math.round(entry.price * 100) * line.quantity;
+  }
+  return total;
+}
+
+function buildShippingOptions(
+  subtotalCents: number,
+): Stripe.Checkout.SessionCreateParams.ShippingOption[] {
+  const deliveryEstimate: Stripe.Checkout.SessionCreateParams.ShippingOption.ShippingRateData.DeliveryEstimate =
+    {
+      minimum: { unit: 'business_day', value: 3 },
+      maximum: { unit: 'business_day', value: 7 },
+    };
+
+  if (subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS) {
+    return [
+      {
+        shipping_rate_data: {
+          type: 'fixed_amount',
+          display_name: 'Free Shipping',
+          fixed_amount: { amount: 0, currency: 'cad' },
+          delivery_estimate: deliveryEstimate,
+        },
+      },
+    ];
+  }
+
+  return [
+    {
+      shipping_rate_data: {
+        type: 'fixed_amount',
+        display_name: 'Standard Delivery',
+        fixed_amount: { amount: STANDARD_SHIPPING_CENTS, currency: 'cad' },
+        delivery_estimate: deliveryEstimate,
+      },
+    },
+  ];
+}
+
 export const handler: Handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 204, headers: cors, body: '' };
@@ -209,7 +258,7 @@ export const handler: Handler = async (event) => {
             productId: entry.id,
             slug: entry.slug,
             sku: entry.sku,
-            source: 'Punjabi Fashion website',
+            source: 'punjabi-fashion-web',
           },
         },
       },
@@ -224,16 +273,34 @@ export const handler: Handler = async (event) => {
     };
   }
 
+  const normalizedLines = normalizedResult.normalized;
+  const cartSubtotalCents = serverCartSubtotalCents(normalizedLines);
+  const itemCount = normalizedLines.reduce((sum, line) => sum + line.quantity, 0);
+
   try {
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
+      customer_creation: 'always',
+      billing_address_collection: 'auto',
+      phone_number_collection: { enabled: true },
+      shipping_address_collection: {
+        allowed_countries: [...SHIPPING_COUNTRIES],
+      },
+      name_collection: {
+        individual: { enabled: true },
+      },
+      shipping_options: buildShippingOptions(cartSubtotalCents),
       line_items: lineItems,
       success_url: `${base}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${base}/checkout/cancel`,
       payment_method_types: ['card'],
       automatic_tax: { enabled: false },
       metadata: {
-        source: 'Punjabi Fashion website',
+        source: 'punjabi-fashion-web',
+        cartSubtotalCents: String(cartSubtotalCents),
+        shippingPolicy: 'standard_15_free_over_340',
+        itemCount: String(itemCount),
+        currency: 'cad',
       },
     });
 

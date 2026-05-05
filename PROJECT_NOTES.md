@@ -11,4 +11,4 @@ Short roadmap for moving from a clean shell to a full South Asian ecommerce expe
 7. **Cart, wishlist, search** — Client UX first; backend later.  
 8. **Store info, contact, appointment** — Hours, location, forms.  
 9. **SEO metadata and structured data** — Titles, descriptions, product schema when catalog is real.  
-10. **Ecommerce integration** — Payments, inventory, and auth when the business is ready (not part of the current shell).
+10. **Ecommerce integration** — Stripe Checkout via Netlify (see README): Canadian shipping-only, tiered Standard / Free shipping at $340 CAD subtotal.

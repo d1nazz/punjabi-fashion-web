@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import { Minus, Plus, ShoppingBag } from 'lucide-react';
 import { useStore } from '@/contexts/StoreContext';
 import { catalogProducts, formatPrice, isCatalogProduct, type Product } from '@/data/products';
+import { FREE_SHIPPING_THRESHOLD_CAD, STANDARD_SHIPPING_CAD } from '@/constants/shipping';
 import { startStripeCheckoutSession } from '@/services/checkout';
 import { validateCartForCheckout } from '@/services/checkoutValidation';
 import { optionsSummary } from '@/utils/cartLine';
 import { productAllowsQuickAdd } from '@/utils/productPurchase';
 
-const FREE_SHIPPING_THRESHOLD = 340;
+const FREE_SHIPPING_THRESHOLD = FREE_SHIPPING_THRESHOLD_CAD;
 
 type CartContentProps = {
   onNavigate?: () => void;
@@ -103,7 +104,10 @@ export default function CartContent({ onNavigate, className = '' }: CartContentP
           <span className="font-semibold text-[#3A1117]">Subtotal</span>
           <span className="font-heading text-lg text-[#1A120F]">{formatPrice(subtotal)}</span>
         </div>
-        <p className="mt-1 text-[11px] leading-relaxed text-[#6F6257]">Taxes and shipping calculated at checkout.</p>
+        <p className="mt-1 text-[11px] leading-relaxed text-[#6F6257]">
+          Standard delivery {formatPrice(STANDARD_SHIPPING_CAD)}. Free shipping on orders over{' '}
+          {formatPrice(FREE_SHIPPING_THRESHOLD)}. Taxes calculated at checkout.
+        </p>
         <div className="mt-4 rounded-sm border border-[#E6D8C4] bg-[#FBF7EF] p-3">
           <p className="text-[12px] text-[#5C1B24]">
             {amountAway > 0
@@ -275,7 +279,8 @@ export default function CartContent({ onNavigate, className = '' }: CartContentP
           {checkoutLoading ? 'Starting checkout…' : 'Checkout'}
         </button>
         <p className="mt-3 text-center text-[11px] leading-relaxed text-[#6F6257]">
-          Taxes and shipping calculated at checkout.
+          Standard delivery {formatPrice(STANDARD_SHIPPING_CAD)}. Free shipping over {formatPrice(FREE_SHIPPING_THRESHOLD)}.
+          Taxes at checkout.
         </p>
       </div>
     </div>

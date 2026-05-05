@@ -55,4 +55,6 @@ Netlify SPA fallback is configured in `netlify.toml`.
 
 Application code lives in **`src/`**. See `ACTIVE_APP.md` for the source-of-truth note and where to edit the UI.
 
-This is a static frontend: no live payments, inventory backend, or third-party commerce integrations are wired in yet.
+This is a client-rendered storefront with **Stripe Checkout** (Netlify Function `create-checkout-session`) for payments. Checkout runs in **CAD** and collects email, phone, individual name, Canadian shipping address (Canada only), billing address when needed (`billing_address_collection: auto`), and **one shipping method**: either **Standard Delivery ($15)** or **Free Shipping** when the cart subtotal is **$340 CAD** or more — same rule as the cart drawer. Final taxes follow Stripe / store settings at checkout (no automatic tax enabled in code yet).
+
+Not a substitute for store policy pages; adjust legal copy separately.
