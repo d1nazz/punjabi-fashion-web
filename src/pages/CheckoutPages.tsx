@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -9,11 +9,13 @@ export function CheckoutSuccessPage() {
   const [params] = useSearchParams();
   const sessionId = params.get('session_id');
   const { clearCart } = useStore();
+  const didClearRef = useRef(false);
 
   useEffect(() => {
-    if (sessionId) {
-      clearCart();
-    }
+    if (didClearRef.current) return;
+    if (!sessionId) return;
+    clearCart();
+    didClearRef.current = true;
   }, [clearCart, sessionId]);
 
   return (

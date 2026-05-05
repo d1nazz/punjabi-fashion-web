@@ -81,24 +81,20 @@ interface StoreContextType {
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 export const StoreProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<CartLineItem[]>([]);
+  const [cart, setCart] = useState<CartLineItem[]>(() =>
+    typeof window !== 'undefined' ? hydrateCart(readPersistedLines()) : [],
+  );
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    setCart(hydrateCart(readPersistedLines()));
-    setHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    if (!hydrated || typeof window === 'undefined') return;
+    if (typeof window === 'undefined') return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(serializeCart(cart)));
     } catch {
       // ignore quota / private mode
     }
-  }, [cart, hydrated]);
+  }, [cart]);
 
   const addToCart = useCallback((product: Product, quantity: number, opts: SelectedProductOptions): CartAddResult => {
     if (!isCatalogProduct(product)) {
@@ -140,7 +136,15 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     setCart((prev) => prev.map((i) => (i.lineId === lineId ? { ...i, quantity: capped } : i)));
   }, []);
 
-  const clearCart = useCallback(() => setCart([]), []);
+  const clearCart = useCallback(() => {
+    setCart([]);
+    if (typeof window === 'undefined') return;
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // ignore quota / private mode
+    }
+  }, []);
 
   const toggleWishlist = useCallback((product: Product) => {
     setWishlist((prev) => {
