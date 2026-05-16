@@ -13,7 +13,7 @@ import BookAppointmentPage from "./pages/BookAppointmentPage.tsx";
 import AboutPage, { VisitStorePage, ContactPage } from "./pages/AboutPage.tsx";
 import FAQPage from "./pages/FAQPage.tsx";
 import { ShippingPolicyPage, ShippingDeliveryPage, ReturnsPolicyPage, PrivacyPolicyPage, TermsPage } from "./pages/PolicyPages.tsx";
-import { WishlistPage, CartPage, AccountPage, SearchResultsPage, NewArrivalsPage, ReadyToShipPage, SalePage, SizeGuidePage, TrackOrderPage, WomenPage, MenPage } from "./pages/ShopPages.tsx";
+import { WishlistPage, CartPage, SearchResultsPage, NewArrivalsPage, ReadyToShipPage, SalePage, SizeGuidePage, TrackOrderPage, WomenPage, MenPage } from "./pages/ShopPages.tsx";
 import { CheckoutCancelPage, CheckoutSuccessPage } from "./pages/CheckoutPages.tsx";
 import { localBusinessJsonLd } from "@/data/businessInfo";
 
@@ -57,7 +57,6 @@ const App = () => (
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout/success" element={<CheckoutSuccessPage />} />
             <Route path="/checkout/cancel" element={<CheckoutCancelPage />} />
-            <Route path="/account" element={<AccountPage />} />
             <Route path="/search" element={<SearchResultsPage />} />
             <Route path="/sale" element={<SalePage />} />
             <Route path="/size-guide" element={<SizeGuidePage />} />

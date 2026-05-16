@@ -16,6 +16,9 @@ dist-ssr
 .vite
 .netlify
 
+# Local Shopify export artifacts (CSV/audit output — do not version real catalog dumps)
+shopify-export/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

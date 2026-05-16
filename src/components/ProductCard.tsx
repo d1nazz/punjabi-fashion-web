@@ -100,9 +100,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           {allowQuickAdd ? (
             <button
               type="button"
-              onClick={() => {
+              onClick={async () => {
                 setQuickMessage(null);
-                const res = addToCart(product, 1, { size: defaultSize });
+                const res = await addToCart(product, 1, { size: defaultSize });
                 if (!res.ok) setQuickMessage(res.message);
               }}
               className="w-full border border-[#B9904A]/35 py-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#5C1B24] transition-colors hover:bg-[#5C1B24] hover:text-[#FFFDF8]"

@@ -26,6 +26,15 @@ export function productAllowsQuickAdd(product: Product): boolean {
   return !productHasAnyRequiredOptions(product);
 }
 
+/** Jewelry / accessories / single-option products map to Shopify’s default (first sellable) variant. */
+export function productUsesDefaultShopifyVariant(product: Product): boolean {
+  const jewelry =
+    ['Bangles', 'Earrings', 'Necklaces'].includes(product.subcategory ?? '') ||
+    ['bangles', 'necklaces', 'earrings'].includes(product.category);
+  if (jewelry) return true;
+  return !productHasAnyRequiredOptions(product);
+}
+
 export function normalizeDefaultSelectedSize(product: Product): string | undefined {
   if (!product.sizes?.length) return undefined;
   if (product.sizes.length === 1) return product.sizes[0];

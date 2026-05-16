@@ -6,6 +6,12 @@ import CartContent from '@/components/cart/CartContent';
 import { useStore } from '@/contexts/StoreContext';
 import { Link } from 'react-router-dom';
 import { catalogProducts, getNewArrivals, getReadyToShip, getSaleProducts, isCatalogProduct, type Product } from '@/data/products';
+import { isShopifyEnabled } from '@/config/commerce';
+import {
+  SHOPIFY_COLLECTION_NEW_ARRIVALS,
+  SHOPIFY_COLLECTION_READY_TO_SHIP,
+} from '@/config/shopifyCollections';
+import { useShopifyCollectionProducts } from '@/hooks/useShopifyCollectionProducts';
 import { Heart, HelpCircle, PackageSearch, Phone, Store } from 'lucide-react';
 import { businessInfo } from '@/data/businessInfo';
 import { useEffect, useMemo, useState } from 'react';
@@ -62,6 +68,7 @@ function CollectionListingPage({
   breadcrumbItems,
   tabs,
   activeTab,
+  shopifyCollectionHandle = null,
 }: {
   title: string;
   description: string;
@@ -69,9 +76,24 @@ function CollectionListingPage({
   breadcrumbItems: { name: string; path?: string }[];
   tabs: { label: string; path: string }[];
   activeTab: string;
+  /** When set and `VITE_COMMERCE_BACKEND=shopify`, load grid from this collection (merged with local). */
+  shopifyCollectionHandle?: string | null;
 }) {
   const [sortBy, setSortBy] = useState('featured');
-  const sortedItems = useMemo(() => sortCollectionProducts(items, sortBy), [items, sortBy]);
+  const { data: shopifyListing, isSuccess: shopifyOk, isError: shopifyErr } =
+    useShopifyCollectionProducts(shopifyCollectionHandle ?? null);
+
+  const listingSource = useMemo(() => {
+    if (!isShopifyEnabled || !shopifyCollectionHandle) return items;
+    if (shopifyErr) return items;
+    if (shopifyOk && shopifyListing?.length) return shopifyListing;
+    return items;
+  }, [items, shopifyCollectionHandle, shopifyOk, shopifyErr, shopifyListing]);
+
+  const sortedItems = useMemo(
+    () => sortCollectionProducts(listingSource, sortBy),
+    [listingSource, sortBy],
+  );
 
   return (
     <Layout>
@@ -81,7 +103,7 @@ function CollectionListingPage({
         description={description}
         tabs={tabs}
         activeTab={activeTab}
-        productCount={items.length}
+        productCount={listingSource.length}
         visibleCount={sortedItems.length}
         filterLabel="Filter"
         sortValue={sortBy}
@@ -152,42 +174,6 @@ export function CartPage() {
   );
 }
 
-export function AccountPage() {
-  const [tab, setTab] = useState<'login' | 'register'>('login');
-  return (
-    <Layout>
-      <div className="bg-champagne py-12 md:py-16 texture-subtle"><div className="container relative z-10"><Breadcrumbs items={[{ name: 'Account' }]} /><h1 className="heading-editorial text-foreground">My Account</h1></div></div>
-      <div className="container py-14 max-w-md mx-auto">
-        <div className="flex mb-8 border-b border-border">
-          <button onClick={() => setTab('login')} className={`pb-3 px-5 text-[11px] uppercase tracking-[0.12em] relative ${tab === 'login' ? 'text-gold' : 'text-muted-foreground'}`}>
-            Sign In {tab === 'login' && <span className="absolute bottom-0 left-0 right-0 h-[1px] bg-gold" />}
-          </button>
-          <button onClick={() => setTab('register')} className={`pb-3 px-5 text-[11px] uppercase tracking-[0.12em] relative ${tab === 'register' ? 'text-gold' : 'text-muted-foreground'}`}>
-            Create Account {tab === 'register' && <span className="absolute bottom-0 left-0 right-0 h-[1px] bg-gold" />}
-          </button>
-        </div>
-        <form onSubmit={e => e.preventDefault()} className="space-y-5">
-          {tab === 'register' && (
-            <div>
-              <label className="label-luxury text-muted-foreground mb-2 block">Full Name</label>
-              <input placeholder="Your full name" className="w-full px-4 py-3.5 border border-border bg-transparent text-[13px] focus:outline-none focus:border-gold transition-colors placeholder:text-muted-foreground/40" />
-            </div>
-          )}
-          <div>
-            <label className="label-luxury text-muted-foreground mb-2 block">Email</label>
-            <input placeholder="you@email.com" type="email" className="w-full px-4 py-3.5 border border-border bg-transparent text-[13px] focus:outline-none focus:border-gold transition-colors placeholder:text-muted-foreground/40" />
-          </div>
-          <div>
-            <label className="label-luxury text-muted-foreground mb-2 block">Password</label>
-            <input placeholder="••••••••" type="password" className="w-full px-4 py-3.5 border border-border bg-transparent text-[13px] focus:outline-none focus:border-gold transition-colors placeholder:text-muted-foreground/40" />
-          </div>
-          <button type="submit" className="w-full btn-luxury btn-luxury-gold py-3.5">{tab === 'login' ? 'Sign In' : 'Create Account'}</button>
-        </form>
-      </div>
-    </Layout>
-  );
-}
-
 export function SearchResultsPage() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
@@ -230,6 +216,7 @@ export function NewArrivalsPage() {
       breadcrumbItems={[{ name: 'Shop' }, { name: 'New Arrivals' }]}
       tabs={discoveryTabs}
       activeTab="New Arrivals"
+      shopifyCollectionHandle={SHOPIFY_COLLECTION_NEW_ARRIVALS}
     />
   );
 }
@@ -244,6 +231,7 @@ export function ReadyToShipPage() {
       breadcrumbItems={[{ name: 'Shop' }, { name: 'Ready to Ship' }]}
       tabs={discoveryTabs}
       activeTab="Ready to Ship"
+      shopifyCollectionHandle={SHOPIFY_COLLECTION_READY_TO_SHIP}
     />
   );
 }

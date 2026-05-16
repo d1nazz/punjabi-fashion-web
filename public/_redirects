@@ -1,0 +1,2 @@
+# SPA fallback for Netlify (copied to dist/). Keeps client routes working on refresh/deep links.
+/*    /index.html   200

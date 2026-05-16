@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, User, Heart, ShoppingBag, Menu, X, ChevronDown } from 'lucide-react';
+import { Search, Heart, ShoppingBag, Menu, X, ChevronDown } from 'lucide-react';
 import { useStore, type WishlistItem } from '@/contexts/StoreContext';
 import { catalogProducts } from '@/data/products';
 import CartDrawer from '@/components/cart/CartDrawer';
@@ -476,13 +476,6 @@ function RightClusterDesktop({
       </div>
 
       <div className="ml-0 flex min-w-0 items-center justify-end gap-3.5 min-[1200px]:ml-1 min-[1200px]:gap-4 2xl:gap-[1.05rem]">
-        <Link
-          to="/account"
-          className={`${iconBtn} hidden h-8 w-8 min-w-8 min-[800px]:inline-flex sm:min-w-9 lg:h-9 lg:w-9`}
-          aria-label="Account"
-        >
-          <User className="h-[20px] w-[20px] min-[1200px]:h-[22px] min-[1200px]:w-[22px]" strokeWidth={1.5} />
-        </Link>
         <Link to="/wishlist" className={`${iconBtn} relative`} aria-label="Wishlist">
           <Heart className="h-[20px] w-[20px] min-[1200px]:h-[22px] min-[1200px]:w-[22px]" strokeWidth={1.5} />
           {wishlist.length > 0 && (
@@ -654,9 +647,6 @@ export default function Header() {
                   >
                     <Search className="h-5 w-5" strokeWidth={1.5} />
                   </button>
-                  <Link to="/account" className={`${iconBtn} hidden h-8 w-8 min-[500px]:inline-flex`} aria-label="Account">
-                    <User className="h-5 w-5" strokeWidth={1.5} />
-                  </Link>
                   <Link to="/wishlist" className={`${iconBtn} relative`} aria-label="Wishlist">
                     <Heart className="h-5 w-5" strokeWidth={1.5} />
                     {wishlist.length > 0 && (
@@ -831,11 +821,11 @@ export default function Header() {
             </nav>
             <div className="border-t border-[#E7DCCB] p-4">
               <Link
-                to="/account"
+                to="/track-order"
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-2.5 py-2.5 text-[15px] text-[#172033] hover:text-[#8A1F2D]"
+                className="block py-2.5 text-[15px] text-[#172033] hover:text-[#8A1F2D]"
               >
-                <User className="h-5 w-5" strokeWidth={1.5} /> My Account
+                Track Your Order
               </Link>
             </div>
           </div>

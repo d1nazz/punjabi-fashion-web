@@ -4,6 +4,9 @@ import ProductCard from '@/components/ProductCard';
 import CollectionHeader from '@/components/CollectionHeader';
 import { getCategoryBySlug, getProductsByCategory, getPartyWearProducts, getFestiveProducts, getBridalProducts, type Product } from '@/data/products';
 import { useState, useMemo } from 'react';
+import { isShopifyEnabled } from '@/config/commerce';
+import { getShopifyCollectionHandleForCategorySlug } from '@/config/shopifyCollections';
+import { useShopifyCollectionProducts } from '@/hooks/useShopifyCollectionProducts';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -61,6 +64,13 @@ export default function CategoryPage() {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [selectedOccasion, setSelectedOccasion] = useState<string | null>(null);
 
+  const shopifyCollectionHandle = useMemo(
+    () => (slug ? getShopifyCollectionHandleForCategorySlug(slug) : null),
+    [slug],
+  );
+  const { data: shopifyListingProducts, isSuccess: shopifyListOk, isError: shopifyListErr } =
+    useShopifyCollectionProducts(shopifyCollectionHandle);
+
   const category = slug ? getCategoryBySlug(slug) : null;
   
   let allProducts: Product[] = [];
@@ -96,8 +106,21 @@ export default function CategoryPage() {
     description = 'Explore our curated collection';
   }
 
+  const listingSource = useMemo(() => {
+    if (!isShopifyEnabled || !shopifyCollectionHandle) return allProducts;
+    if (shopifyListErr) return allProducts;
+    if (shopifyListOk && shopifyListingProducts?.length) return shopifyListingProducts;
+    return allProducts;
+  }, [
+    allProducts,
+    shopifyCollectionHandle,
+    shopifyListOk,
+    shopifyListErr,
+    shopifyListingProducts,
+  ]);
+
   const sortedProducts = useMemo(() => {
-    let filtered = [...allProducts];
+    let filtered = [...listingSource];
     if (selectedOccasion) {
       filtered = filtered.filter(p => p.occasion.includes(selectedOccasion));
     }
@@ -107,7 +130,7 @@ export default function CategoryPage() {
       case 'price-desc': return [...filtered].sort((a, b) => b.price - a.price);
       default: return filtered;
     }
-  }, [allProducts, sortBy, selectedOccasion]);
+  }, [listingSource, sortBy, selectedOccasion]);
 
   const meta = slug ? categoryMeta[slug] : undefined;
   const displayTitle = meta?.label ?? title;
@@ -132,7 +155,7 @@ export default function CategoryPage() {
         description={editorialIntro || description}
         tabs={meta?.tabs ?? womenTabs}
         activeTab={displayTitle}
-        productCount={allProducts.length}
+        productCount={listingSource.length}
         visibleCount={sortedProducts.length}
         onFilterClick={() => setFiltersOpen(!filtersOpen)}
         filterLabel={filtersOpen ? 'Hide Filter' : 'Filter'}

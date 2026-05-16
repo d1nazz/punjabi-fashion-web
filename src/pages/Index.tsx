@@ -316,7 +316,7 @@ export default function HomePage() {
     <Layout>
       <section className="relative h-[80vh] min-h-[620px] overflow-hidden md:h-[90vh]">
         <img src={heroBridal} alt="Punjabi Fashion South Asian boutique fashion" className="absolute inset-0 h-full w-full scale-105 object-cover" width={1920} height={1080} />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1A120F]/88 via-[#3A1117]/58 to-[#1A120F]/18" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/35 to-transparent" aria-hidden="true" />
         <div className="absolute inset-0 hero-boutique-vignette pointer-events-none" aria-hidden="true" />
         <div className="absolute left-6 top-1/2 hidden h-36 w-px -translate-y-1/2 bg-gradient-to-b from-transparent via-gold/55 to-transparent md:block" aria-hidden="true" />
 
@@ -331,16 +331,16 @@ export default function HomePage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="label-editorial mb-5 text-gold-light/90"
+              className="label-luxury mb-5 font-normal uppercase tracking-[0.26em] text-[#D8B76A] [text-shadow:0_2px_14px_rgba(0,0,0,0.55)]"
             >
               Brampton Boutique · South Asian Fashion
             </motion.p>
 
-            <h1 className="heading-editorial mb-5 text-4xl leading-[1.08] text-cream md:text-5xl lg:text-[3.75rem]">
+            <h1 className="heading-editorial mb-5 text-4xl leading-[1.08] text-[#FFF8EC] [text-shadow:0_3px_24px_rgba(0,0,0,0.6)] md:text-5xl lg:text-[3.75rem]">
               Where Heritage Meets Modern South Asian Fashion
             </h1>
             <div className="mb-6 h-px w-24 bg-gold/65" />
-            <p className="mb-9 max-w-xl font-body text-[15px] leading-relaxed text-cream/68 md:text-base">
+            <p className="mb-9 max-w-2xl font-body text-base leading-relaxed !text-[#FFF8EC]/95 md:text-lg [text-shadow:0_2px_18px_rgba(0,0,0,0.65)]">
               {businessInfo.shortDescription}
             </p>
 
@@ -357,7 +357,7 @@ export default function HomePage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 1.5 }}
-              className="mt-9 grid max-w-xl grid-cols-2 gap-2.5 text-[10px] uppercase tracking-[0.12em] text-cream/55 sm:grid-cols-4"
+              className="mt-9 grid max-w-xl grid-cols-2 gap-2.5 text-[10px] uppercase tracking-[0.14em] sm:grid-cols-4 sm:tracking-[0.12em]"
             >
               {[
                 ['Personalized Care', Sparkles],
@@ -365,9 +365,12 @@ export default function HomePage() {
                 ['Ready-to-Ship Available', Truck],
                 ['Styling Help Available', Calendar],
               ].map(([label, Icon]) => (
-                <span key={label as string} className="flex items-center gap-1.5 border border-cream/10 bg-cream/5 px-2.5 py-2">
-                  <Icon className="h-3 w-3 text-gold" strokeWidth={1.5} />
-                  {label as string}
+                <span
+                  key={label as string}
+                  className="flex items-center gap-2 rounded-sm border border-[#D8B76A]/25 bg-black/25 px-2.5 py-2 text-[10px] uppercase tracking-[0.14em] text-[#FFF8EC]/90 backdrop-blur-sm sm:tracking-[0.12em]"
+                >
+                  <Icon className="h-3 w-3 shrink-0 text-[#D8B76A]" strokeWidth={1.5} aria-hidden />
+                  <span className="text-[#FFF8EC]/90">{label as string}</span>
                 </span>
               ))}
             </motion.div>

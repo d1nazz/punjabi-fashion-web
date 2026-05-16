@@ -14,7 +14,7 @@ export function CheckoutSuccessPage() {
   useEffect(() => {
     if (didClearRef.current) return;
     if (!sessionId) return;
-    clearCart();
+    void clearCart();
     didClearRef.current = true;
   }, [clearCart, sessionId]);
 

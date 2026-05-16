@@ -5,6 +5,7 @@ import Layout from '@/components/Layout';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ProductCard from '@/components/ProductCard';
 import { catalogProducts, getProductBySlug, formatPrice } from '@/data/products';
+import { isShopifyEnabled } from '@/config/commerce';
 import { useStore } from '@/contexts/StoreContext';
 import { businessInfo } from '@/data/businessInfo';
 import type { SelectedProductOptions } from '@/types/commerce';
@@ -19,7 +20,7 @@ import {
 export default function ProductDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const product = slug ? getProductBySlug(slug) : undefined;
-  const { addToCart, toggleWishlist, isInWishlist } = useStore();
+  const { addToCart, toggleWishlist, isInWishlist, isCartBusy } = useStore();
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedStitching, setSelectedStitching] = useState('');
@@ -84,7 +85,7 @@ export default function ProductDetailPage() {
     };
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     setPdpActionError(null);
     if (!product.inStock) {
       setPdpActionError('This piece is currently unavailable.');
@@ -109,10 +110,13 @@ export default function ProductDetailPage() {
 
     const opts = buildSelections();
     setAddLoading(true);
-    const res = addToCart(product, quantity, opts);
-    setAddLoading(false);
-    if (!res.ok) {
-      setPdpActionError(res.message);
+    try {
+      const res = await addToCart(product, quantity, opts);
+      if (!res.ok) {
+        setPdpActionError(res.message);
+      }
+    } finally {
+      setAddLoading(false);
     }
   };
 
@@ -142,6 +146,27 @@ export default function ProductDetailPage() {
     if (buyNowLoading) return;
 
     const opts = buildSelections();
+
+    if (isShopifyEnabled) {
+      if (isCartBusy) return;
+      setBuyNowLoading(true);
+      try {
+        const res = await addToCart(product, quantity, opts);
+        if (!res.ok) {
+          setPdpActionError(res.message);
+          return;
+        }
+        if (!res.checkoutUrl?.trim()) {
+          setPdpActionError('Checkout link unavailable. Open your cart and try again.');
+          return;
+        }
+        window.location.assign(res.checkoutUrl);
+      } finally {
+        setBuyNowLoading(false);
+      }
+      return;
+    }
+
     const line = buildCartLineItem(product, quantity, opts);
 
     setBuyNowLoading(true);
@@ -292,19 +317,19 @@ export default function ProductDetailPage() {
             )}
             <div className="flex flex-col gap-3 mb-4 sm:flex-row sm:items-stretch">
               <div className="flex shrink-0 items-center justify-center border border-border sm:h-auto">
-                <button type="button" onClick={() => setQuantity(Math.max(1, quantity - 1))} disabled={buyNowLoading || addLoading || !product.inStock} className="p-3 hover:bg-muted/50 transition-colors disabled:opacity-40">
+                <button type="button" onClick={() => setQuantity(Math.max(1, quantity - 1))} disabled={buyNowLoading || addLoading || !product.inStock || isCartBusy} className="p-3 hover:bg-muted/50 transition-colors disabled:opacity-40">
                   <Minus className="w-3.5 h-3.5" strokeWidth={1.5} />
                 </button>
                 <span className="px-5 text-[13px] font-body font-semibold min-w-[40px] text-center">{quantity}</span>
-                <button type="button" onClick={() => setQuantity(Math.min(50, quantity + 1))} disabled={buyNowLoading || addLoading || !product.inStock} className="p-3 hover:bg-muted/50 transition-colors disabled:opacity-40">
+                <button type="button" onClick={() => setQuantity(Math.min(50, quantity + 1))} disabled={buyNowLoading || addLoading || !product.inStock || isCartBusy} className="p-3 hover:bg-muted/50 transition-colors disabled:opacity-40">
                   <Plus className="w-3.5 h-3.5" strokeWidth={1.5} />
                 </button>
               </div>
-              <button type="button" onClick={handleAddToCart} disabled={addLoading || buyNowLoading || !product.inStock}
+              <button type="button" onClick={() => void handleAddToCart()} disabled={addLoading || buyNowLoading || !product.inStock || isCartBusy}
                 className="btn-luxury btn-luxury-gold flex-1 shrink min-h-[52px] py-3.5 disabled:pointer-events-none disabled:opacity-50">
                 {addLoading ? 'Adding…' : 'Add to Cart'}
               </button>
-              <button type="button" onClick={handleBuyNow} disabled={buyNowLoading || addLoading || !product.inStock}
+              <button type="button" onClick={() => void handleBuyNow()} disabled={buyNowLoading || addLoading || !product.inStock || isCartBusy}
                 className="btn-luxury border border-[#5C1B24]/35 bg-transparent text-[11px] font-semibold uppercase tracking-[0.14em] text-[#5C1B24] flex-1 shrink min-h-[52px] py-3.5 transition-colors hover:bg-[#5C1B24]/06 disabled:pointer-events-none disabled:opacity-50">
                 {buyNowLoading ? 'Redirecting…' : 'Buy Now'}
               </button>

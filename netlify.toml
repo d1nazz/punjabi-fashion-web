@@ -8,11 +8,6 @@
   port = 8888
 
 [functions]
-directory = "netlify/functions"
-# Ensure server-side catalog JSON is packaged with the function bundle.
-included_files = ["netlify/functions/_data/**"]
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+  directory = "netlify/functions"
+  # Ensure server-side catalog JSON is packaged with the function bundle.
+  included_files = ["netlify/functions/_data/**"]

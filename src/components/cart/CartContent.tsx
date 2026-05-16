@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Minus, Plus, ShoppingBag } from 'lucide-react';
+import { isShopifyEnabled } from '@/config/commerce';
 import { useStore } from '@/contexts/StoreContext';
 import { catalogProducts, formatPrice, isCatalogProduct, type Product } from '@/data/products';
 import { FREE_SHIPPING_THRESHOLD_CAD, STANDARD_SHIPPING_CAD } from '@/constants/shipping';
@@ -29,12 +30,21 @@ const isJewelryProduct = (product: Product) =>
   ['bangles', 'necklaces', 'earrings'].includes(product.category);
 
 export default function CartContent({ onNavigate, className = '' }: CartContentProps) {
-  const { cart, addToCart, removeFromCart, updateCartQuantity } = useStore();
+  const {
+    cart,
+    addToCart,
+    removeFromCart,
+    updateCartQuantity,
+    cartTotal,
+    shopifyCheckoutUrl,
+    shopifyCartError,
+    isCartBusy,
+  } = useStore();
   const visibleCart = cart.filter((item) =>
     catalogProducts.some((p) => p.id === item.productId && isCatalogProduct(p)),
   );
 
-  const subtotal = visibleCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = isShopifyEnabled ? cartTotal : visibleCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const itemCount = visibleCart.reduce((sum, item) => sum + item.quantity, 0);
   const amountAway = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
   const freeShippingProgress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
@@ -55,6 +65,17 @@ export default function CartContent({ onNavigate, className = '' }: CartContentP
 
   const handleCheckout = async () => {
     setCheckoutError(null);
+    if (isShopifyEnabled) {
+      if (checkoutLoading || isCartBusy) return;
+      if (!shopifyCheckoutUrl?.trim()) {
+        setCheckoutError('Checkout could not start. Please refresh the page or try again in a moment.');
+        return;
+      }
+      setCheckoutLoading(true);
+      window.location.assign(shopifyCheckoutUrl);
+      return;
+    }
+
     const guard = validateCartForCheckout(visibleCart);
     if (guard) {
       setCheckoutError(guard);
@@ -99,14 +120,20 @@ export default function CartContent({ onNavigate, className = '' }: CartContentP
 
   return (
     <div className={`flex min-h-0 flex-1 flex-col ${className}`}>
+      {shopifyCartError && (
+        <p className="border-b border-[#E6D8C4] bg-[#FFF0F0] px-5 py-3 text-center text-[12px] leading-relaxed text-[#8A1F2D]" role="alert">
+          {shopifyCartError}
+        </p>
+      )}
       <div className="border-b border-[#E6D8C4] bg-[#FFFDF8] px-5 py-4">
         <div className="flex items-center justify-between text-[13px]">
           <span className="font-semibold text-[#3A1117]">Subtotal</span>
           <span className="font-heading text-lg text-[#1A120F]">{formatPrice(subtotal)}</span>
         </div>
         <p className="mt-1 text-[11px] leading-relaxed text-[#6F6257]">
-          Standard delivery {formatPrice(STANDARD_SHIPPING_CAD)}. Free shipping on orders over{' '}
-          {formatPrice(FREE_SHIPPING_THRESHOLD)}. Taxes calculated at checkout.
+          {isShopifyEnabled
+            ? 'Shipping, taxes, and payment are confirmed on Shopify checkout.'
+            : `Standard delivery ${formatPrice(STANDARD_SHIPPING_CAD)}. Free shipping on orders over ${formatPrice(FREE_SHIPPING_THRESHOLD)}. Taxes calculated at checkout.`}
         </p>
         <div className="mt-4 rounded-sm border border-[#E6D8C4] bg-[#FBF7EF] p-3">
           <p className="text-[12px] text-[#5C1B24]">
@@ -160,8 +187,9 @@ export default function CartContent({ onNavigate, className = '' }: CartContentP
                     <div className="flex h-9 items-center border border-[#D8C8AE] bg-[#FFFDF8]">
                       <button
                         type="button"
-                        onClick={() => updateCartQuantity(item.lineId, Math.max(1, item.quantity - 1))}
-                        className="flex h-9 w-9 items-center justify-center text-[#3A1117] hover:bg-[#F4E8D8]"
+                        disabled={isCartBusy}
+                        onClick={() => void updateCartQuantity(item.lineId, Math.max(1, item.quantity - 1))}
+                        className="flex h-9 w-9 items-center justify-center text-[#3A1117] hover:bg-[#F4E8D8] disabled:opacity-45"
                         aria-label={`Decrease quantity for ${item.name}`}
                       >
                         <Minus className="h-3.5 w-3.5" strokeWidth={1.5} />
@@ -171,8 +199,9 @@ export default function CartContent({ onNavigate, className = '' }: CartContentP
                       </span>
                       <button
                         type="button"
-                        onClick={() => updateCartQuantity(item.lineId, item.quantity + 1)}
-                        className="flex h-9 w-9 items-center justify-center text-[#3A1117] hover:bg-[#F4E8D8]"
+                        disabled={isCartBusy}
+                        onClick={() => void updateCartQuantity(item.lineId, item.quantity + 1)}
+                        className="flex h-9 w-9 items-center justify-center text-[#3A1117] hover:bg-[#F4E8D8] disabled:opacity-45"
                         aria-label={`Increase quantity for ${item.name}`}
                       >
                         <Plus className="h-3.5 w-3.5" strokeWidth={1.5} />
@@ -180,8 +209,9 @@ export default function CartContent({ onNavigate, className = '' }: CartContentP
                     </div>
                     <button
                       type="button"
-                      onClick={() => removeFromCart(item.lineId)}
-                      className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8A1F2D] hover:text-[#B9904A]"
+                      disabled={isCartBusy}
+                      onClick={() => void removeFromCart(item.lineId)}
+                      className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8A1F2D] hover:text-[#B9904A] disabled:opacity-45"
                     >
                       Remove
                     </button>
@@ -235,8 +265,10 @@ export default function CartContent({ onNavigate, className = '' }: CartContentP
                           type="button"
                           onClick={() => {
                             setSuggestAddError(null);
-                            const res = addToCart(product, 1, { size: defaultSize });
-                            if (!res.ok) setSuggestAddError(res.message);
+                            void (async () => {
+                              const res = await addToCart(product, 1, { size: defaultSize });
+                              if (!res.ok) setSuggestAddError(res.message);
+                            })();
                           }}
                           className="border border-[#B9904A]/35 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#5C1B24] hover:bg-[#5C1B24] hover:text-[#FFFDF8]"
                         >
@@ -272,15 +304,16 @@ export default function CartContent({ onNavigate, className = '' }: CartContentP
         )}
         <button
           type="button"
-          onClick={handleCheckout}
-          disabled={checkoutLoading || visibleCart.length === 0}
+          onClick={() => void handleCheckout()}
+          disabled={checkoutLoading || visibleCart.length === 0 || (isShopifyEnabled && isCartBusy)}
           className="btn-luxury btn-luxury-gold w-full py-3.5 disabled:pointer-events-none disabled:opacity-50"
         >
-          {checkoutLoading ? 'Starting checkout…' : 'Checkout'}
+          {checkoutLoading ? (isShopifyEnabled ? 'Opening checkout…' : 'Starting checkout…') : 'Checkout'}
         </button>
         <p className="mt-3 text-center text-[11px] leading-relaxed text-[#6F6257]">
-          Standard delivery {formatPrice(STANDARD_SHIPPING_CAD)}. Free shipping over {formatPrice(FREE_SHIPPING_THRESHOLD)}.
-          Taxes at checkout.
+          {isShopifyEnabled
+            ? 'You will complete payment on Shopify’s secure checkout.'
+            : `Standard delivery ${formatPrice(STANDARD_SHIPPING_CAD)}. Free shipping over ${formatPrice(FREE_SHIPPING_THRESHOLD)}. Taxes at checkout.`}
         </p>
       </div>
     </div>

@@ -40,6 +40,7 @@ export const localBusinessJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ClothingStore',
   name: businessInfo.name,
+  url: 'https://punjabifashion.ca',
   description: businessInfo.description,
   telephone: businessInfo.phone.raw,
   address: {

@@ -5,13 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:netlify": "npx netlify dev",
     "build": "vite build",
     "generate:checkout-catalog": "vite-node --config vite.config.ts scripts/generate-checkout-catalog.ts",
+    "export:shopify-products": "vite-node --config vite.config.ts scripts/export-shopify-products.ts",
+    "audit:shopify-local-match": "vite-node --config vite.config.ts scripts/audit-shopify-local-match.ts",
     "prebuild": "npm run generate:checkout-catalog",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
+    "test:shopify": "vite-node --config vite.config.ts scripts/test-shopify-storefront.ts",
+    "test:shopify-collections": "vite-node --config vite.config.ts scripts/test-shopify-collections.ts",
     "test:watch": "vitest"
   },
   "dependencies": {
