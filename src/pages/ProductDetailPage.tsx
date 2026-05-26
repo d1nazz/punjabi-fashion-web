@@ -17,6 +17,18 @@ import {
   productRequiresStitchingChoice,
 } from '@/utils/productPurchase';
 
+const CLOTHING_SIZE_ORDER = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+const CLOTHING_CATEGORY_SLUGS = [
+  'punjabi-suits',
+  'lehengas',
+  'sharara-gharara',
+  'party-wear',
+  'sherwanis',
+  'kurta-pajama',
+  'mens-jackets',
+  'kids',
+];
+
 export default function ProductDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const product = slug ? getProductBySlug(slug) : undefined;
@@ -64,6 +76,11 @@ export default function ProductDetailPage() {
   const relatedProducts = catalogProducts.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
   const isJewelryProduct = ['Bangles', 'Earrings', 'Necklaces'].includes(product.subcategory ?? '') || ['bangles', 'necklaces'].includes(product.category);
   const imageFitClass = isJewelryProduct ? 'object-contain' : 'object-cover';
+  const usesClothingSizes = !isJewelryProduct && (
+    CLOTHING_CATEGORY_SLUGS.includes(product.category) ||
+    product.sizes.some((size) => CLOTHING_SIZE_ORDER.includes(size))
+  );
+  const displayedSizes = usesClothingSizes ? CLOTHING_SIZE_ORDER : product.sizes;
 
   const buildSelections = (): SelectedProductOptions => {
     const autoSize =
@@ -200,8 +217,13 @@ export default function ProductDetailPage() {
           <div className="space-y-3">
             <div className="aspect-[3/4] overflow-hidden bg-surface-image relative group rounded-sm border border-gold/10">
               <img src={product.images[0]} alt={product.name} className={`w-full h-full ${imageFitClass} transition-transform duration-700 group-hover:scale-[1.03]`} />
+              {!product.inStock && (
+                <div className="absolute top-4 left-4 bg-[#1A120F]/90 backdrop-blur-sm text-cream text-[9px] font-semibold uppercase tracking-[0.15em] px-3 py-1.5">
+                  Sold Out
+                </div>
+              )}
               {/* Sale badge */}
-              {product.isSale && product.compareAtPrice && (
+              {product.inStock && product.isSale && product.compareAtPrice && (
                 <div className="absolute top-4 left-4 bg-destructive/90 backdrop-blur-sm text-cream text-[9px] font-semibold uppercase tracking-[0.15em] px-3 py-1.5">
                   Save {formatPrice(product.compareAtPrice - product.price)}
                 </div>
@@ -228,6 +250,11 @@ export default function ProductDetailPage() {
             {/* Price */}
             <div className="flex items-baseline gap-3 mb-4 mt-4 pb-4 border-b border-border">
               <span className="font-heading text-2xl text-foreground">{formatPrice(product.price)}</span>
+              {!product.inStock && (
+                <span className="text-[10px] bg-[#1A120F]/10 text-[#1A120F] px-2 py-0.5 uppercase tracking-wider font-semibold">
+                  Sold Out
+                </span>
+              )}
               {product.compareAtPrice && (
                 <>
                   <span className="text-[14px] text-muted-foreground/50 line-through">{formatPrice(product.compareAtPrice)}</span>
@@ -287,25 +314,40 @@ export default function ProductDetailPage() {
             )}
 
             {/* Size Selector */}
-            {product.sizes.length > 1 && (
+            {displayedSizes.length > 1 && (
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="label-luxury text-foreground">Select Size</h3>
                   <Link to="/size-guide" className="text-[11px] text-gold hover:underline tracking-wide">Size Guide</Link>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {product.sizes.map(s => (
-                    <button key={s} type="button" onClick={() => setSelectedSize(s)}
-                      className={`min-h-[44px] min-w-[48px] h-11 px-4 border text-[12px] tracking-wide transition-all duration-300 ${
-                        selectedSize === s
-                          ? 'border-gold bg-gold/10 text-gold-dark font-semibold'
-                          : 'border-border text-muted-foreground hover:border-gold/50 hover:text-foreground'
-                      }`}>
-                      {s}
-                    </button>
-                  ))}
+                  {displayedSizes.map(s => {
+                    const sizeAvailable = product.inStock && product.sizes.includes(s);
+                    const sizeSelected = sizeAvailable && (selectedSize === s || product.sizes.length === 1);
+                    return (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => setSelectedSize(s)}
+                        disabled={!sizeAvailable}
+                        className={`min-h-[44px] min-w-[48px] h-11 px-4 border text-[12px] tracking-wide transition-all duration-300 ${
+                          sizeSelected
+                            ? 'border-gold bg-gold/10 text-gold-dark font-semibold'
+                            : sizeAvailable
+                              ? 'border-border text-muted-foreground hover:border-gold/50 hover:text-foreground'
+                              : 'cursor-not-allowed border-border/60 text-muted-foreground/45 line-through opacity-70'
+                        }`}
+                        aria-label={sizeAvailable ? `Size ${s}` : `Size ${s} sold out`}
+                      >
+                        <span>{s}</span>
+                        {!sizeAvailable && (
+                          <span className="ml-1 text-[8px] uppercase tracking-[0.12em] no-underline">Sold Out</span>
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
-                {!selectedSize && product.sizes.length > 1 && (
+                {!selectedSize && productRequiresExplicitSize(product) && product.inStock && (
                   <p className="text-[11px] text-muted-foreground/50 mt-2">Please select a size to continue</p>
                 )}
               </div>

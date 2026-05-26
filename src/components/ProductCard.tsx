@@ -34,6 +34,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Tags */}
         <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+          {!product.inStock && (
+            <span className="bg-[#1A120F]/90 backdrop-blur-sm text-cream text-[9px] font-semibold uppercase tracking-[0.15em] px-2.5 py-1">Sold Out</span>
+          )}
           {product.isNew && (
             <span className="bg-[#3A1117]/90 backdrop-blur-sm text-cream text-[9px] font-semibold uppercase tracking-[0.15em] px-2.5 py-1">New</span>
           )}
