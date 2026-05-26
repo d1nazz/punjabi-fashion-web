@@ -268,15 +268,10 @@
     "price": 325,
     "sku": "PF-LH-015",
     "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
+      "L"
     ],
     "currency": "CAD",
-    "inStock": false
+    "inStock": true
   },
   {
     "id": "lh-16",
@@ -505,7 +500,7 @@
     "price": 25,
     "sku": "PF-BG-014",
     "sizes": [
-      "One Size"
+      "2.6"
     ],
     "currency": "CAD",
     "inStock": true
@@ -517,7 +512,7 @@
     "price": 25,
     "sku": "PF-BG-015",
     "sizes": [
-      "One Size"
+      "2.6"
     ],
     "currency": "CAD",
     "inStock": true
@@ -529,7 +524,7 @@
     "price": 25,
     "sku": "PF-BG-016",
     "sizes": [
-      "One Size"
+      "2.8"
     ],
     "currency": "CAD",
     "inStock": true
@@ -541,7 +536,7 @@
     "price": 25,
     "sku": "PF-BG-017",
     "sizes": [
-      "One Size"
+      "2.8"
     ],
     "currency": "CAD",
     "inStock": true
@@ -553,7 +548,7 @@
     "price": 25,
     "sku": "PF-BG-018",
     "sizes": [
-      "One Size"
+      "2.8"
     ],
     "currency": "CAD",
     "inStock": true
@@ -565,7 +560,7 @@
     "price": 25,
     "sku": "PF-BG-019",
     "sizes": [
-      "One Size"
+      "2.8"
     ],
     "currency": "CAD",
     "inStock": true
@@ -577,7 +572,7 @@
     "price": 25,
     "sku": "PF-BG-020",
     "sizes": [
-      "One Size"
+      "2.4"
     ],
     "currency": "CAD",
     "inStock": true
@@ -589,7 +584,7 @@
     "price": 25,
     "sku": "PF-BG-021",
     "sizes": [
-      "One Size"
+      "2.6"
     ],
     "currency": "CAD",
     "inStock": true
@@ -601,7 +596,7 @@
     "price": 25,
     "sku": "PF-BG-022",
     "sizes": [
-      "One Size"
+      "2.8"
     ],
     "currency": "CAD",
     "inStock": true
@@ -613,7 +608,7 @@
     "price": 25,
     "sku": "PF-BG-023",
     "sizes": [
-      "One Size"
+      "2.6"
     ],
     "currency": "CAD",
     "inStock": true
@@ -625,7 +620,7 @@
     "price": 25,
     "sku": "PF-BG-024",
     "sizes": [
-      "One Size"
+      "2.4"
     ],
     "currency": "CAD",
     "inStock": true
@@ -637,7 +632,7 @@
     "price": 25,
     "sku": "PF-BG-025",
     "sizes": [
-      "One Size"
+      "2.4"
     ],
     "currency": "CAD",
     "inStock": true
@@ -649,7 +644,7 @@
     "price": 25,
     "sku": "PF-BG-026",
     "sizes": [
-      "One Size"
+      "2.4"
     ],
     "currency": "CAD",
     "inStock": true
@@ -661,7 +656,7 @@
     "price": 25,
     "sku": "PF-BG-027",
     "sizes": [
-      "One Size"
+      "2.8"
     ],
     "currency": "CAD",
     "inStock": true
@@ -898,7 +893,7 @@
     "id": "er-20",
     "slug": "gold-tone-festive-earrings-20",
     "name": "Gold-Tone Festive Earrings",
-    "price": 18,
+    "price": 35,
     "sku": "PF-ER-020",
     "sizes": [
       "One Size"
@@ -910,7 +905,7 @@
     "id": "er-21",
     "slug": "pink-festive-earrings-21",
     "name": "Pink Festive Earrings",
-    "price": 18,
+    "price": 25,
     "sku": "PF-ER-021",
     "sizes": [
       "One Size"
@@ -922,7 +917,7 @@
     "id": "er-22",
     "slug": "blush-festive-earrings-22",
     "name": "Blush Festive Earrings",
-    "price": 18,
+    "price": 35,
     "sku": "PF-ER-022",
     "sizes": [
       "One Size"
@@ -934,7 +929,7 @@
     "id": "er-23",
     "slug": "blue-festive-earrings-23",
     "name": "Blue Festive Earrings",
-    "price": 18,
+    "price": 35,
     "sku": "PF-ER-023",
     "sizes": [
       "One Size"

@@ -75,6 +75,7 @@ export default function ProductDetailPage() {
   const wishlisted = isInWishlist(product.id);
   const relatedProducts = catalogProducts.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
   const isJewelryProduct = ['Bangles', 'Earrings', 'Necklaces'].includes(product.subcategory ?? '') || ['bangles', 'necklaces'].includes(product.category);
+  const isBangleProduct = product.subcategory === 'Bangles' || product.category === 'bangles';
   const imageFitClass = isJewelryProduct ? 'object-contain' : 'object-cover';
   const usesClothingSizes = !isJewelryProduct && (
     CLOTHING_CATEGORY_SLUGS.includes(product.category) ||
@@ -314,7 +315,7 @@ export default function ProductDetailPage() {
             )}
 
             {/* Size Selector */}
-            {displayedSizes.length > 1 && (
+            {(displayedSizes.length > 1 || (isBangleProduct && displayedSizes.length > 0)) && (
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="label-luxury text-foreground">Select Size</h3>
