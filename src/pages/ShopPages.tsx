@@ -30,6 +30,7 @@ const womenTabs = [
   { label: 'Party Wear', path: '/category/party-wear' },
   { label: 'Shararas', path: '/category/sharara-gharara' },
   { label: 'Punjabi Suits', path: '/category/punjabi-suits' },
+  { label: 'Women’s Kurti’s', path: '/category/womens-kurtis' },
   { label: 'Ready to Ship', path: '/ready-to-ship' },
 ];
 
@@ -501,7 +502,7 @@ export function TrackOrderPage() {
 }
 
 export function WomenPage() {
-  const items = catalogProducts.filter(p => ['punjabi-suits','lehengas','sarees','anarkalis','sharara-gharara','gowns','dresses-kaftans','kurtis'].includes(p.category));
+  const items = catalogProducts.filter(p => ['punjabi-suits','lehengas','sarees','anarkalis','sharara-gharara','gowns','dresses-kaftans','kurtis','womens-kurtis'].includes(p.category));
   return (
     <CollectionListingPage
       title="Women"

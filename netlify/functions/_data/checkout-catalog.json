@@ -84,6 +84,131 @@
     "inStock": true
   },
   {
+    "id": "ps-8",
+    "slug": "black-embellished-punjabi-suit-set-08",
+    "name": "Black Embellished Punjabi Suit Set",
+    "price": 185,
+    "sku": "PF-PS-008",
+    "sizes": [
+      "L",
+      "XL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "wk-1",
+    "slug": "pink-embroidered-kurti-01",
+    "name": "Pink Embroidered Kurti",
+    "price": 75,
+    "sku": "PF-WK-001",
+    "sizes": [
+      "M",
+      "XL",
+      "XXL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "wk-2",
+    "slug": "purple-floral-kurti-02",
+    "name": "Purple Floral Kurti",
+    "price": 75,
+    "sku": "PF-WK-002",
+    "sizes": [
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "wk-3",
+    "slug": "lavender-floral-kurti-03",
+    "name": "Lavender Floral Kurti",
+    "price": 75,
+    "sku": "PF-WK-003",
+    "sizes": [
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "wk-4",
+    "slug": "light-blue-striped-kurti-04",
+    "name": "Light Blue Striped Kurti",
+    "price": 75,
+    "sku": "PF-WK-004",
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "wk-5",
+    "slug": "olive-striped-kurti-05",
+    "name": "Olive Striped Kurti",
+    "price": 75,
+    "sku": "PF-WK-005",
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "wk-6",
+    "slug": "teal-floral-kurti-06",
+    "name": "Teal Floral Kurti",
+    "price": 75,
+    "sku": "PF-WK-006",
+    "sizes": [
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "mk-1",
+    "slug": "yellow-embellished-mens-kurta",
+    "name": "Yellow Embellished Men’s Kurta",
+    "price": 100,
+    "sku": "PF-MK-001",
+    "sizes": [
+      "40"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "mk-2",
+    "slug": "blue-traditional-mens-kurta",
+    "name": "Blue Traditional Men’s Kurta",
+    "price": 100,
+    "sku": "PF-MK-002",
+    "sizes": [
+      "46"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
     "id": "lh-1",
     "slug": "royal-blue-embroidered-lehenga-set",
     "name": "Royal Blue Embroidered Lehenga Set",
@@ -373,6 +498,20 @@
     "sku": "PF-SH-008",
     "sizes": [
       "XL"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "sh-9",
+    "slug": "black-gold-embroidered-sharara-set",
+    "name": "Black Gold Embroidered Sharara Set",
+    "price": 225,
+    "sku": "PF-SH-009",
+    "sizes": [
+      "L",
+      "XL",
+      "3XL"
     ],
     "currency": "CAD",
     "inStock": true

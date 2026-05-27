@@ -1,8 +1,9 @@
 import type { Product } from '@/data/products';
 import type { SelectedProductOptions } from '@/types/commerce';
 
-/** Multiple sizes means customer must choose (unless only one option). */
+/** Multiple sizes and men's numeric kurta sizes require an explicit customer choice. */
 export function productRequiresExplicitSize(product: Product): boolean {
+  if (product.category === 'kurta-pajama') return true;
   return Array.isArray(product.sizes) && product.sizes.length > 1;
 }
 

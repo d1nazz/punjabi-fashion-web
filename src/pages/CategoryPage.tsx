@@ -21,6 +21,7 @@ const womenTabs = [
   { label: 'Party Wear', path: '/category/party-wear' },
   { label: 'Shararas', path: '/category/sharara-gharara' },
   { label: 'Punjabi Suits', path: '/category/punjabi-suits' },
+  { label: 'Women’s Kurti’s', path: '/category/womens-kurtis' },
   { label: 'Ready to Ship', path: '/ready-to-ship' },
 ];
 
@@ -48,6 +49,7 @@ const categoryMeta: Record<string, { parent: string; label: string; tabs: typeof
   'party-wear': { parent: 'Women', label: 'Party Wear', tabs: [{ label: 'Women', path: '/women' }, ...womenTabs.filter((tab) => tab.label !== 'Party Wear')] },
   'sharara-gharara': { parent: 'Women', label: 'Shararas', tabs: [{ label: 'Women', path: '/women' }, ...womenTabs.filter((tab) => tab.label !== 'Shararas')] },
   'punjabi-suits': { parent: 'Women', label: 'Punjabi Suits', tabs: [{ label: 'Women', path: '/women' }, ...womenTabs.filter((tab) => tab.label !== 'Punjabi Suits')] },
+  'womens-kurtis': { parent: 'Women', label: 'Women’s Kurti’s', tabs: [{ label: 'Women', path: '/women' }, ...womenTabs.filter((tab) => tab.label !== 'Women’s Kurti’s')] },
   sherwanis: { parent: 'Men', label: 'Men Punjabi Suits', tabs: [{ label: 'Men', path: '/men' }, ...menTabs.filter((tab) => tab.label !== 'Men Punjabi Suits')] },
   'kurta-pajama': { parent: 'Men', label: 'Kurtas', tabs: [{ label: 'Men', path: '/men' }, ...menTabs.filter((tab) => tab.label !== 'Kurtas')] },
   kids: { parent: 'Kids', label: 'Kids', tabs: kidsTabs },

@@ -17,17 +17,18 @@ import {
   productRequiresStitchingChoice,
 } from '@/utils/productPurchase';
 
-const CLOTHING_SIZE_ORDER = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+const CLOTHING_SIZE_ORDER = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'];
 const CLOTHING_CATEGORY_SLUGS = [
   'punjabi-suits',
+  'womens-kurtis',
   'lehengas',
   'sharara-gharara',
   'party-wear',
   'sherwanis',
-  'kurta-pajama',
   'mens-jackets',
   'kids',
 ];
+const NUMERIC_SIZE_CATEGORY_SLUGS = ['kurta-pajama'];
 
 export default function ProductDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -76,8 +77,9 @@ export default function ProductDetailPage() {
   const relatedProducts = catalogProducts.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
   const isJewelryProduct = ['Bangles', 'Earrings', 'Necklaces'].includes(product.subcategory ?? '') || ['bangles', 'necklaces'].includes(product.category);
   const isBangleProduct = product.subcategory === 'Bangles' || product.category === 'bangles';
+  const usesNumericSizes = NUMERIC_SIZE_CATEGORY_SLUGS.includes(product.category);
   const imageFitClass = isJewelryProduct ? 'object-contain' : 'object-cover';
-  const usesClothingSizes = !isJewelryProduct && (
+  const usesClothingSizes = !isJewelryProduct && !usesNumericSizes && (
     CLOTHING_CATEGORY_SLUGS.includes(product.category) ||
     product.sizes.some((size) => CLOTHING_SIZE_ORDER.includes(size))
   );
@@ -85,7 +87,9 @@ export default function ProductDetailPage() {
 
   const buildSelections = (): SelectedProductOptions => {
     const autoSize =
-      product.sizes.length === 1
+      productRequiresExplicitSize(product)
+        ? selectedSize.trim()
+        : product.sizes.length === 1
         ? product.sizes[0]
         : selectedSize.trim();
     const color =
@@ -315,7 +319,7 @@ export default function ProductDetailPage() {
             )}
 
             {/* Size Selector */}
-            {(displayedSizes.length > 1 || (isBangleProduct && displayedSizes.length > 0)) && (
+            {(displayedSizes.length > 1 || ((isBangleProduct || usesNumericSizes) && displayedSizes.length > 0)) && (
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="label-luxury text-foreground">Select Size</h3>
@@ -324,7 +328,10 @@ export default function ProductDetailPage() {
                 <div className="flex flex-wrap gap-2">
                   {displayedSizes.map(s => {
                     const sizeAvailable = product.inStock && product.sizes.includes(s);
-                    const sizeSelected = sizeAvailable && (selectedSize === s || product.sizes.length === 1);
+                    const sizeSelected = sizeAvailable && (
+                      selectedSize === s ||
+                      (!productRequiresExplicitSize(product) && product.sizes.length === 1)
+                    );
                     return (
                       <button
                         key={s}
