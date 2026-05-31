@@ -266,15 +266,15 @@ export function SizeGuidePage() {
     meta.content = description;
   }, []);
 
-  const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'];
   const topMeasurements = [
-    { label: 'Bust', values: ['32', '34', '36', '38', '41', '44'] },
-    { label: 'Waist', values: ['26', '28', '30', '32', '35', '38'] },
-    { label: 'Hip', values: ['36', '38', '40', '42', '45', '48'] },
+    { label: 'Bust', values: ['32', '34', '36', '38', '41', '44', '46'] },
+    { label: 'Waist', values: ['26', '28', '30', '32', '35', '38', '40'] },
+    { label: 'Hip', values: ['36', '38', '40', '42', '45', '48', '50'] },
   ];
   const bottomMeasurements = [
-    { label: 'Waist', values: ['26', '28', '30', '32', '34', '36'] },
-    { label: 'Hip', values: ['36', '38', '40', '42', '45', '48'] },
+    { label: 'Waist', values: ['26', '28', '30', '32', '34', '36', '38'] },
+    { label: 'Hip', values: ['36', '38', '40', '42', '45', '48', '50'] },
   ];
   const helpCards = [
     {
