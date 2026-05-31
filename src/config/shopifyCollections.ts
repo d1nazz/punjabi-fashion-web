@@ -10,6 +10,7 @@ export const CATEGORY_SLUG_TO_SHOPIFY_COLLECTION: Readonly<Record<string, string
   "party-wear": "party-wear",
   "sharara-gharara": "sharara-gharara",
   "womens-kurtis": "womens-kurtis",
+  blouses: "blouses",
   "kurta-pajama": "kurta-pajama",
   shararas: "sharara-gharara",
   bangles: "bangles",

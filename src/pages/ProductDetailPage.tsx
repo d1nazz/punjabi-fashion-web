@@ -21,6 +21,7 @@ const CLOTHING_SIZE_ORDER = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'];
 const CLOTHING_CATEGORY_SLUGS = [
   'punjabi-suits',
   'womens-kurtis',
+  'blouses',
   'lehengas',
   'sharara-gharara',
   'party-wear',

@@ -79,6 +79,7 @@ const headerCategoryMenus: MegaMenuConfig[] = [
           { name: 'Shararas', desc: 'Sharara sets for special occasions', path: '/category/sharara-gharara' },
           { name: 'Punjabi Suits', desc: 'Classic suits for everyday and events', path: '/category/punjabi-suits' },
           { name: 'Women’s Kurti’s', desc: 'Everyday and festive kurti styles', path: '/category/womens-kurtis' },
+          { name: 'Blouses', desc: 'Blouse styles for lehengas, sarees, and South Asian occasion wear', path: '/category/blouses' },
         ],
       },
       {
@@ -790,6 +791,7 @@ export default function Header() {
                 { name: 'Shararas', path: '/category/sharara-gharara' },
                 { name: 'Punjabi Suits', path: '/category/punjabi-suits' },
                 { name: 'Women’s Kurti’s', path: '/category/womens-kurtis' },
+                { name: 'Blouses', path: '/category/blouses' },
                 { name: '— Men —', path: '/men', bold: true },
                 { name: 'All Men', path: '/men' },
                 { name: 'Men Punjabi Suits', path: '/category/sherwanis' },

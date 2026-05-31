@@ -97,6 +97,18 @@
     "inStock": true
   },
   {
+    "id": "ps-9",
+    "slug": "red-embroidered-punjabi-suit-set",
+    "name": "Red Embroidered Punjabi Suit Set",
+    "price": 200,
+    "sku": "PF-PS-009",
+    "sizes": [
+      "L"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
     "id": "wk-1",
     "slug": "pink-embroidered-kurti-01",
     "name": "Pink Embroidered Kurti",
@@ -185,6 +197,102 @@
     "inStock": true
   },
   {
+    "id": "bl-1",
+    "slug": "light-pink-embroidered-blouse",
+    "name": "Light Pink Embroidered Blouse",
+    "price": 45,
+    "sku": "PF-BL-001",
+    "sizes": [
+      "L"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bl-2",
+    "slug": "red-embroidered-blouse",
+    "name": "Red Embroidered Blouse",
+    "price": 45,
+    "sku": "PF-BL-002",
+    "sizes": [
+      "L"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bl-3",
+    "slug": "magenta-festive-blouse",
+    "name": "Magenta Festive Blouse",
+    "price": 45,
+    "sku": "PF-BL-003",
+    "sizes": [
+      "L"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bl-4",
+    "slug": "champagne-gold-occasion-blouse",
+    "name": "Champagne Gold Occasion Blouse",
+    "price": 45,
+    "sku": "PF-BL-004",
+    "sizes": [
+      "L"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bl-5",
+    "slug": "sage-green-embellished-blouse",
+    "name": "Sage Green Embellished Blouse",
+    "price": 45,
+    "sku": "PF-BL-005",
+    "sizes": [
+      "L"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bl-6",
+    "slug": "teal-blue-embroidered-blouse",
+    "name": "Teal Blue Embroidered Blouse",
+    "price": 45,
+    "sku": "PF-BL-006",
+    "sizes": [
+      "L"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bl-7",
+    "slug": "silver-pink-embellished-blouse",
+    "name": "Silver Pink Embellished Blouse",
+    "price": 45,
+    "sku": "PF-BL-007",
+    "sizes": [
+      "L"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "bl-8",
+    "slug": "lavender-blue-occasion-blouse",
+    "name": "Lavender Blue Occasion Blouse",
+    "price": 45,
+    "sku": "PF-BL-008",
+    "sizes": [
+      "L"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
     "id": "mk-1",
     "slug": "yellow-embellished-mens-kurta",
     "name": "Yellow Embellished Men’s Kurta",
@@ -228,23 +336,6 @@
     "sku": "PF-LH-002",
     "sizes": [
       "L"
-    ],
-    "currency": "CAD",
-    "inStock": true
-  },
-  {
-    "id": "lh-3",
-    "slug": "black-embroidered-sharara-lehenga-set",
-    "name": "Black Embroidered Sharara Lehenga Set",
-    "price": 329,
-    "sku": "PF-LH-003",
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
     ],
     "currency": "CAD",
     "inStock": true
@@ -334,23 +425,6 @@
     "inStock": true
   },
   {
-    "id": "lh-11",
-    "slug": "teal-embroidered-sharara-lehenga-set",
-    "name": "Teal Embroidered Sharara Lehenga Set",
-    "price": 319,
-    "sku": "PF-LH-011",
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
-    "currency": "CAD",
-    "inStock": true
-  },
-  {
     "id": "lh-12",
     "slug": "orange-red-festive-lehenga",
     "name": "Orange Red Festive Lehenga",
@@ -404,6 +478,78 @@
     "name": "Lime Green Festive Lehenga",
     "price": 250,
     "sku": "PF-LH-016",
+    "sizes": [
+      "L"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-17",
+    "slug": "cream-orange-floral-lehenga-set",
+    "name": "Cream Orange Floral Lehenga Set",
+    "price": 390,
+    "sku": "PF-LH-017",
+    "sizes": [
+      "L"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-18",
+    "slug": "purple-floral-occasion-lehenga-set",
+    "name": "Purple Floral Occasion Lehenga Set",
+    "price": 390,
+    "sku": "PF-LH-018",
+    "sizes": [
+      "L"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-19",
+    "slug": "olive-green-floral-lehenga-set",
+    "name": "Olive Green Floral Lehenga Set",
+    "price": 390,
+    "sku": "PF-LH-019",
+    "sizes": [
+      "L"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-20",
+    "slug": "wine-red-embroidered-lehenga-set",
+    "name": "Wine Red Embroidered Lehenga Set",
+    "price": 315,
+    "sku": "PF-LH-020",
+    "sizes": [
+      "L"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-21",
+    "slug": "teal-blue-embroidered-lehenga-set",
+    "name": "Teal Blue Embroidered Lehenga Set",
+    "price": 315,
+    "sku": "PF-LH-021",
+    "sizes": [
+      "L"
+    ],
+    "currency": "CAD",
+    "inStock": true
+  },
+  {
+    "id": "lh-22",
+    "slug": "lavender-silver-embroidered-lehenga-set",
+    "name": "Lavender Silver Embroidered Lehenga Set",
+    "price": 385,
+    "sku": "PF-LH-022",
     "sizes": [
       "L"
     ],

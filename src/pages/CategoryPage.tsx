@@ -22,8 +22,18 @@ const womenTabs = [
   { label: 'Shararas', path: '/category/sharara-gharara' },
   { label: 'Punjabi Suits', path: '/category/punjabi-suits' },
   { label: 'Women’s Kurti’s', path: '/category/womens-kurtis' },
+  { label: 'Blouses', path: '/category/blouses' },
   { label: 'Ready to Ship', path: '/ready-to-ship' },
 ];
+
+const womenCategorySlugs = new Set([
+  'lehengas',
+  'party-wear',
+  'sharara-gharara',
+  'punjabi-suits',
+  'womens-kurtis',
+  'blouses',
+]);
 
 const menTabs = [
   { label: 'New Arrivals', path: '/new-arrivals' },
@@ -50,6 +60,7 @@ const categoryMeta: Record<string, { parent: string; label: string; tabs: typeof
   'sharara-gharara': { parent: 'Women', label: 'Shararas', tabs: [{ label: 'Women', path: '/women' }, ...womenTabs.filter((tab) => tab.label !== 'Shararas')] },
   'punjabi-suits': { parent: 'Women', label: 'Punjabi Suits', tabs: [{ label: 'Women', path: '/women' }, ...womenTabs.filter((tab) => tab.label !== 'Punjabi Suits')] },
   'womens-kurtis': { parent: 'Women', label: 'Women’s Kurti’s', tabs: [{ label: 'Women', path: '/women' }, ...womenTabs.filter((tab) => tab.label !== 'Women’s Kurti’s')] },
+  blouses: { parent: 'Women', label: 'Blouses', tabs: [{ label: 'Women', path: '/women' }, ...womenTabs.filter((tab) => tab.label !== 'Blouses')] },
   sherwanis: { parent: 'Men', label: 'Men Punjabi Suits', tabs: [{ label: 'Men', path: '/men' }, ...menTabs.filter((tab) => tab.label !== 'Men Punjabi Suits')] },
   'kurta-pajama': { parent: 'Men', label: 'Kurtas', tabs: [{ label: 'Men', path: '/men' }, ...menTabs.filter((tab) => tab.label !== 'Kurtas')] },
   kids: { parent: 'Kids', label: 'Kids', tabs: kidsTabs },
@@ -111,7 +122,18 @@ export default function CategoryPage() {
   const listingSource = useMemo(() => {
     if (!isShopifyEnabled || !shopifyCollectionHandle) return allProducts;
     if (shopifyListErr) return allProducts;
-    if (shopifyListOk && shopifyListingProducts?.length) return shopifyListingProducts;
+    if (shopifyListOk && shopifyListingProducts?.length) {
+      if (slug && womenCategorySlugs.has(slug)) {
+        const shopifyProductKeys = new Set(
+          shopifyListingProducts.flatMap((product) => [product.id, product.slug, product.sku]),
+        );
+        const localOnlyProducts = allProducts.filter(
+          (product) => !shopifyProductKeys.has(product.id) && !shopifyProductKeys.has(product.slug) && !shopifyProductKeys.has(product.sku),
+        );
+        return [...shopifyListingProducts, ...localOnlyProducts];
+      }
+      return shopifyListingProducts;
+    }
     return allProducts;
   }, [
     allProducts,
@@ -119,6 +141,7 @@ export default function CategoryPage() {
     shopifyListOk,
     shopifyListErr,
     shopifyListingProducts,
+    slug,
   ]);
 
   const sortedProducts = useMemo(() => {
